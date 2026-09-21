@@ -1,0 +1,181 @@
+{
+  "nav": {
+    "home": "Accueil",
+    "brandRole": "Ingénieur Logiciel",
+    "about": "À propos",
+    "experience": "Expérience",
+    "skills": "Compétences",
+    "projects": "Projets",
+    "education": "Formation",
+    "blog": "Blog",
+    "contact": "Contact",
+    "menu": "Menu",
+    "close": "Fermer"
+  },
+  "hero": {
+    "greeting": "Bonjour, je suis",
+    "roles": {
+      "softwareEngineer": "Ingénieur logiciel",
+      "fullStackDeveloper": "Développeur full-stack",
+      "pfeCandidate": "Candidat PFE",
+      "aiMlBuilder": "Développeur IA/ML"
+    },
+    "tagline": "Étudiant en dernière année de génie logiciel, je crée des plateformes web de qualité production.",
+    "cta": {
+      "viewProjects": "Voir mes projets",
+      "downloadCv": "Télécharger mon CV",
+      "contactMe": "Me contacter"
+    },
+    "scrollDown": "Défiler vers le bas"
+  },
+  "about": {
+    "title": "À propos",
+    "subtitle": "Un peu de contexte",
+    "bio1": "Ingénieur full-stack axé sur les architectures scalables, l'automatisation des tests et la livraison de produits utilisés en production.",
+    "bio2": "Étudiant en dernière année de génie logiciel à l'ISSAT Sousse, à la recherche d'un stage PFE où je peux apporter mes compétences full-stack, cloud et IA/ML à une équipe produit.",
+    "languagesLabel": "Langues",
+    "photoAlt": "Portrait de Fakher Neila",
+    "stats": {
+      "yearsStudying": "Années d'études",
+      "internships": "Stages",
+      "projects": "Projets",
+      "technologies": "Technologies"
+    }
+  },
+  "experience": {
+    "title": "Expérience",
+    "subtitle": "Mon parcours professionnel",
+    "present": "Aujourd'hui",
+    "achievement": "Impact",
+    "viewSite": "Voir le site",
+    "responsibilities": "Responsabilités",
+    "technologies": "Technologies"
+  },
+  "skills": {
+    "title": "Stack technique",
+    "subtitle": "Les outils que j'utilise au quotidien",
+    "categories": {
+      "languages": "Langages",
+      "frameworks": "Frameworks",
+      "databases": "Bases de données",
+      "devops": "DevOps et outils",
+      "backend": "Backend",
+      "ai": "IA & Automatisation",
+      "testing": "Tests & QA",
+      "design": "Design"
+    }
+  },
+  "projects": {
+    "title": "Projets",
+    "subtitle": "Une sélection de réalisations",
+    "viewAll": "Voir tous les projets",
+    "viewCase": "Voir l'étude de cas",
+    "backToList": "Retour aux projets",
+    "overview": "Aperçu",
+    "problem": "Problème",
+    "solution": "Solution",
+    "stack": "Stack technique",
+    "gallery": "Galerie",
+    "metrics": "Impact",
+    "noProjects": "Aucun projet dans cette catégorie pour le moment.",
+    "previous": "Précédent",
+    "next": "Suivant",
+    "notFound": "Projet introuvable",
+    "notFoundDescription": "Ce projet n'existe pas ou a été supprimé.",
+    "liveDemo": "Démo en ligne",
+    "sourceCode": "Code source",
+    "filters": {
+      "all": "Tous"
+    },
+    "categories": {
+      "fullstack": "Full-Stack",
+      "ai": "IA & Données",
+      "qa": "QA",
+      "design": "Design"
+    }
+  },
+  "education": {
+    "title": "Formation",
+    "subtitle": "Parcours académique",
+    "hackathons": { "label": "Hackathons" },
+    "leadership": { "label": "Engagement" },
+    "roles": { "participant": "Participant", "organizer": "Organisateur" },
+    "award": { "firstPlace": "1ère Place" }
+  },
+  "blog": {
+    "title": "Blog",
+    "subtitle": "Réflexions et articles",
+    "readMore": "Lire la suite",
+    "readAll": "Tous les articles",
+    "minRead": "min de lecture",
+    "backToList": "Retour au blog",
+    "publishedOn": "Publié le",
+    "previous": "Article précédent",
+    "next": "Article suivant",
+    "empty": "Aucun article pour le moment. Revenez bientôt.",
+    "notFound": "Article introuvable",
+    "notFoundDescription": "Cet article n'existe pas ou a été supprimé.",
+    "readingTime": "{{minutes}} min de lecture"
+  },
+  "contact": {
+    "title": "Contact",
+    "subtitle": "Construisons quelque chose ensemble",
+    "orReachMe": "Ou contactez-moi directement",
+    "emailsLabel": {
+      "personal": "Personnel",
+      "professional": "Professionnel"
+    },
+    "availability": {
+      "available": "Disponible pour un stage PFE",
+      "range": "Fév. 2026 – Août 2026",
+      "unavailable": "Actuellement indisponible"
+    },
+    "form": {
+      "name": "Nom",
+      "email": "E-mail",
+      "subject": "Objet",
+      "message": "Message",
+      "submit": "Envoyer le message",
+      "sending": "Envoi en cours...",
+      "success": "Message envoyé. Je vous répondrai bientôt.",
+      "error": "Une erreur est survenue. Veuillez réessayer.",
+      "placeholders": {
+        "name": "Votre nom",
+        "email": "vous@exemple.com",
+        "subject": "Quel est le sujet ?",
+        "message": "Parlez-moi de votre projet ou de votre opportunité..."
+      },
+      "errors": {
+        "nameMin": "Le nom doit comporter au moins 2 caractères",
+        "emailInvalid": "Veuillez saisir une adresse e-mail valide",
+        "subjectMin": "L'objet doit comporter au moins 3 caractères",
+        "messageMin": "Le message doit comporter au moins 20 caractères"
+      }
+    },
+    "socials": { "github": "GitHub", "linkedin": "LinkedIn", "email": "E-mail" }
+  },
+  "footer": {
+    "tagline": "Création d'expériences web premium depuis Tunis.",
+    "quickLinks": "Liens rapides",
+    "followMe": "Me suivre",
+    "backToTop": "Retour en haut",
+    "rights": "Tous droits réservés.",
+    "builtWith": "Réalisé avec React, Tailwind et Framer Motion."
+  },
+  "common": {
+    "loading": "Chargement...",
+    "error": "Erreur",
+    "notFound": {
+      "title": "Page introuvable",
+      "description": "La page que vous recherchez n'existe pas.",
+      "backHome": "Retour à l'accueil"
+    }
+  },
+  "a11y": {
+    "toggleTheme": "Changer de thème",
+    "switchLanguage": "Changer de langue",
+    "openMenu": "Ouvrir le menu",
+    "closeMenu": "Fermer le menu",
+    "scrollToTop": "Retour en haut"
+  }
+}

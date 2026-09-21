@@ -1,0 +1,180 @@
+{
+  "nav": {
+    "home": "Home",
+    "brandRole": "Software Engineer",
+    "about": "About",
+    "experience": "Experience",
+    "skills": "Skills",
+    "projects": "Projects",
+    "education": "Education",
+    "blog": "Blog",
+    "contact": "Contact",
+    "menu": "Menu",
+    "close": "Close"
+  },
+  "hero": {
+    "greeting": "Hello, I'm",
+    "roles": {
+      "softwareEngineer": "Software Engineer",
+      "fullStackDeveloper": "Full-Stack Developer",
+      "pfeCandidate": "PFE Candidate",
+      "aiMlBuilder": "AI/ML Builder"
+    },
+    "tagline": "Final-year Software Engineering student crafting premium web experiences.",
+    "cta": {
+      "viewProjects": "View Projects",
+      "downloadCv": "Download CV",
+      "contactMe": "Contact Me"
+    },
+    "scrollDown": "Scroll down"
+  },
+  "about": {
+    "title": "About Me",
+    "subtitle": "A little context",
+    "bio1": "Full-stack engineer focused on scalable architectures, test automation, and shipping products that real users depend on.",
+    "bio2": "Final-year Software Engineering student at ISSAT Sousse, currently looking for a PFE internship where I can bring full-stack, cloud, and AI/ML skills to a real product team.",
+    "languagesLabel": "Languages",
+    "photoAlt": "Portrait of Fakher Neila",
+    "stats": {
+      "yearsStudying": "Years studying",
+      "internships": "Internships",
+      "projects": "Projects",
+      "technologies": "Technologies"
+    }
+  },
+  "experience": {
+    "title": "Experience",
+    "subtitle": "Where I've worked",
+    "present": "Present",
+    "achievement": "Impact",
+    "viewSite": "View site",
+    "responsibilities": "Responsibilities",
+    "technologies": "Technologies"
+  },
+  "skills": {
+    "title": "Tech Stack",
+    "subtitle": "Tools I use daily",
+    "categories": {
+      "languages": "Languages",
+      "frameworks": "Frameworks",
+      "databases": "Databases",
+      "devops": "DevOps & Tools",
+      "backend": "Backend",
+      "ai": "AI & Automation",
+      "testing": "Testing & QA",
+      "design": "Design"
+    }
+  },
+  "projects": {
+    "title": "Projects",
+    "subtitle": "Selected work",
+    "viewAll": "View all projects",
+    "viewCase": "View case study",
+    "backToList": "Back to all projects",
+    "overview": "Overview",
+    "problem": "Problem",
+    "solution": "Solution",
+    "stack": "Tech Stack",
+    "gallery": "Gallery",
+    "metrics": "Impact",
+    "noProjects": "No projects in this category yet.",
+    "previous": "Previous",
+    "next": "Next",
+    "notFound": "Project not found",
+    "notFoundDescription": "This project doesn't exist or was removed.",
+    "liveDemo": "Live Demo",
+    "sourceCode": "Source Code",
+    "filters": {
+      "all": "All"
+    },
+    "categories": {
+      "fullstack": "Full-Stack",
+      "ai": "AI & Data",
+      "qa": "QA",
+      "design": "Design"
+    }
+  },
+  "education": {
+    "title": "Education",
+    "subtitle": "Academic background",
+    "hackathons": { "label": "Hackathons" },
+    "leadership": { "label": "Leadership" },
+    "roles": { "participant": "Participant", "organizer": "Organizer" },
+    "award": { "firstPlace": "1st Place" }
+  },
+  "blog": {
+    "title": "Blog",
+    "subtitle": "Thoughts and write-ups",
+    "readMore": "Read more",
+    "readAll": "All articles",
+    "minRead": "min read",
+    "backToList": "Back to blog",
+    "publishedOn": "Published on",
+    "previous": "Previous post",
+    "next": "Next post",
+    "empty": "No posts yet. Check back soon.",
+    "notFound": "Post not found",
+    "notFoundDescription": "This post doesn't exist or was removed.",
+    "readingTime": "{{minutes}} min read"
+  },
+  "contact": {
+    "title": "Contact",
+    "subtitle": "Let's build something",
+    "orReachMe": "Or reach me directly",
+    "emailsLabel": {
+      "personal": "Personal",
+      "professional": "Professional"
+    },
+    "availability": {
+      "available": "Available for PFE internship",
+      "range": "Feb 2026 – Aug 2026",
+      "unavailable": "Currently unavailable"
+    },
+    "form": {
+      "name": "Name",
+      "email": "Email",
+      "subject": "Subject",
+      "message": "Message",
+      "submit": "Send message",
+      "sending": "Sending...",
+      "success": "Message sent. I'll get back to you soon.",
+      "error": "Something went wrong. Please try again.",
+      "placeholders": {
+        "name": "Your name",
+        "email": "you@example.com",
+        "subject": "What is this about?",
+        "message": "Tell me about your project or opportunity..."
+      },
+      "errors": {
+        "nameMin": "Name must be at least 2 characters",
+        "emailInvalid": "Please enter a valid email",
+        "subjectMin": "Subject must be at least 3 characters",
+        "messageMin": "Message must be at least 20 characters"
+      }
+    },
+    "socials": { "github": "GitHub", "linkedin": "LinkedIn", "email": "Email" }
+  },
+  "footer": {
+    "tagline": "Building premium web experiences from Tunis.",
+    "quickLinks": "Quick Links",
+    "followMe": "Follow Me",
+    "backToTop": "Back to top",
+    "rights": "All rights reserved."
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "Error",
+    "notFound": {
+      "title": "Page not found",
+      "description": "The page you're looking for doesn't exist.",
+      "backHome": "Back to home"
+    }
+  },
+  "a11y": {
+    "toggleTheme": "Toggle theme",
+    "switchLanguage": "Switch language",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "scrollToTop": "Scroll to top"
+  }
+}

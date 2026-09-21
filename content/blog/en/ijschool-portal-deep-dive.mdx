@@ -1,0 +1,105 @@
+---
+title: "How I built a production portal with 198 tests and 99 Lighthouse"
+excerpt: "A deep dive into the architecture, testing strategy, and security decisions behind the IJSchool trainers portal."
+date: "2026-09-01"
+tags: ["React", "Testing", "Security", "Vite"]
+cover: "/blog/ijschool-deep-dive.webp"
+draft: false
+---
+
+# How I built a production portal with 198 tests and 99 Lighthouse
+
+## The problem
+
+IJSchool’s HR team was coordinating trainer onboarding across Notion, Google Forms, and Airtable. Information was dispersed, reporting was manual, and every new trainer had to learn a different slice of the workflow. The team needed a single, calm interface that would make the next action obvious.
+
+<Callout type="info" title="The real constraint">
+The goal was not to build the most elaborate platform. It was to remove friction from a workflow already used every week.
+</Callout>
+
+## The constraints
+
+- Around 100 trainers would use the portal, including people with low digital literacy.
+- The new product had to replace a Notion site one-for-one while offering a clearer UX.
+- I was the only developer, with eight weeks and no existing codebase.
+- Security requirements included CSRF protection, rate limiting, XSS sanitisation, and secure headers.
+- The release needed meaningful automated tests, not only a manual checklist.
+
+## The stack decision
+
+I chose React 18, Vite, and Tailwind for the client, with Airtable as a backend-as-a-service. A custom backend would have offered more control, but Airtable was already part of the HR team’s workflow, its API was well documented, and it removed infrastructure from an eight-week solo project.
+
+The important detail was to isolate the Airtable boundary and cache reads for five minutes:
+
+```ts
+type AirtablePage<T> = {
+  records: Array<{ id: string; fields: T }>
+  offset?: string
+}
+
+const cache = new Map<string, { expires: number; value: unknown }>()
+
+export async function fetchTable<T>(table: string): Promise<T[]> {
+  const cached = cache.get(table)
+  if (cached && cached.expires > Date.now()) return cached.value as T[]
+
+  const response = await fetch(`/api/airtable/${table}`)
+  if (!response.ok) throw new Error('Airtable request failed')
+  const page = await response.json() as AirtablePage<T>
+  const value = page.records.map((record) => record.fields)
+  cache.set(table, { expires: Date.now() + 5 * 60_000, value })
+  return value
+}
+```
+
+<Callout type="tip" title="Keep the boundary boring">
+The UI should not know whether the data comes from Airtable, a database, or a fixture. A narrow adapter makes that decision replaceable.
+</Callout>
+
+## The testing strategy
+
+The final suite included 198 unit tests with Vitest and Testing Library, plus 32 Playwright end-to-end tests. Coverage reached 78%. I tested validation, loading states, permissions, empty states, and the highest-value trainer journeys. I did not pretend that every visual detail needed a snapshot; screenshots are useful when they protect a real contract, not as a substitute for understanding the workflow.
+
+The CSRF token generator had a deliberately small contract:
+
+```ts
+import { describe, expect, it } from 'vitest'
+import { createCsrfToken } from './csrf'
+
+describe('createCsrfToken', () => {
+  it('returns a token with a one hour expiry', () => {
+    const token = createCsrfToken(Date.now())
+    expect(token.value).toHaveLength(64)
+    expect(token.expiresAt).toBe(Date.now() + 60 * 60 * 1000)
+  })
+})
+```
+
+## The security layer
+
+CSRF tokens expired after one hour and were stored locally so a form could be resumed without a fresh request. Rate limiting capped requests at ten per minute, protecting both the service and the team from accidental loops. DOMPurify sanitised user-controlled strings before rendering them, which matters even in a small internal tool: internal users are still users. Finally, HTTP security headers reduced the blast radius of a misconfiguration.
+
+```ts
+export function isAllowedRequest(timestamp: number, requests: number[]): boolean {
+  const windowStart = timestamp - 60_000
+  return requests.filter((request) => request >= windowStart).length < 10
+}
+```
+
+<Callout type="warn" title="Security is part of the feature">
+A polished workflow that leaks data or accepts unsafe HTML is not finished. Security checks belong in the acceptance criteria from the first story.
+</Callout>
+
+## Results
+
+The portal shipped at [ijschool.fr/portail-formateur](https://ijschool.fr/portail-formateur). Lighthouse reached 99 performance, 95 accessibility, 100 best practices, and 100 SEO. Around 100 trainers used the portal, API calls fell by 70% through the five-minute cache, and the project reached 51+ commits through iterative delivery.
+
+<Image src="/blog/ijschool-deep-dive.webp" alt="IJSchool portal architecture" caption="The portal separates the trainer workflow from the data boundary." />
+
+## What I’d do differently
+
+I would use a real backend for atomic transactions, add axe-core for automated accessibility testing, and establish CI/CD on day one instead of at the end. Airtable was the right constraint-friendly choice, but it should not become a permanent excuse when consistency guarantees become important.
+
+## Conclusion
+
+Shipping to real users made the feedback loop more honest. The best architecture was the one that made a trainer’s next action clear, made failures observable, and left enough room to improve without rewriting everything.
