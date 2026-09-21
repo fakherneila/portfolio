@@ -83,7 +83,7 @@ export function Hero() {
                 variant="secondary"
                 size="lg"
                 as="a"
-                href="/cv.pdf"
+                href="/Cv.pdf"
                 external
                 icon="Download"
                 className="border border-gold/60 text-gold hover:border-gold hover:text-gold-bright"
