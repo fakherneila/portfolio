@@ -97,10 +97,19 @@
   "education": {
     "title": "Formation",
     "subtitle": "Parcours académique",
-    "hackathons": { "label": "Hackathons" },
-    "leadership": { "label": "Engagement" },
-    "roles": { "participant": "Participant", "organizer": "Organisateur" },
-    "award": { "firstPlace": "1ère Place" }
+    "hackathons": {
+      "label": "Hackathons"
+    },
+    "leadership": {
+      "label": "Engagement"
+    },
+    "roles": {
+      "participant": "Participant",
+      "organizer": "Organisateur"
+    },
+    "award": {
+      "firstPlace": "1ère Place"
+    }
   },
   "blog": {
     "title": "Blog",
@@ -115,7 +124,13 @@
     "empty": "Aucun article pour le moment. Revenez bientôt.",
     "notFound": "Article introuvable",
     "notFoundDescription": "Cet article n'existe pas ou a été supprimé.",
-    "readingTime": "{{minutes}} min de lecture"
+    "readingTime": "{{minutes}} min de lecture",
+    "eyebrow": "Écriture",
+    "comingSoon": {
+      "title": "Bientôt disponible",
+      "description": "Je prépare une série d'articles techniques sur le développement full-stack, les tests et l'IA. Revenez bientôt — ou contactez-moi si vous souhaitez échanger en attendant.",
+      "cta": "Me contacter"
+    }
   },
   "contact": {
     "title": "Contact",
@@ -125,6 +140,7 @@
       "personal": "Personnel",
       "professional": "Professionnel"
     },
+    "phonesLabel": "Téléphone",
     "availability": {
       "available": "Disponible pour un stage PFE",
       "range": "Fév. 2026 – Août 2026",
@@ -152,7 +168,11 @@
         "messageMin": "Le message doit comporter au moins 20 caractères"
       }
     },
-    "socials": { "github": "GitHub", "linkedin": "LinkedIn", "email": "E-mail" }
+    "socials": {
+      "github": "GitHub",
+      "linkedin": "LinkedIn",
+      "email": "E-mail"
+    }
   },
   "footer": {
     "tagline": "Création d'expériences web premium depuis Tunis.",

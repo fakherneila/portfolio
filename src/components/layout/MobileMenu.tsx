@@ -1,6 +1,8 @@
 import { AnimatePresence, motion } from 'framer-motion'
 import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
+import { useLocation, useNavigate } from 'react-router-dom'
+import { useLocale } from '@/hooks/useLocale'
 import { Badge, Icon } from '@/components/ui'
 import LocaleLink from '@/components/ui/LocaleLink'
 import ThemeToggle from '@/components/ui/ThemeToggle'
@@ -19,6 +21,11 @@ type MobileMenuProps = {
 export default function MobileMenu({ open, onClose, links }: MobileMenuProps) {
   const { t } = useTranslation()
   const prefersReducedMotion = useMediaQuery('(prefers-reduced-motion: reduce)')
+  const location = useLocation()
+  const navigate = useNavigate()
+  const { locale } = useLocale()
+  const isHomePage =
+    location.pathname === `/${locale}` || location.pathname === `/${locale}/`
 
   useEffect(() => {
     document.body.style.overflow = open ? 'hidden' : ''
@@ -34,9 +41,16 @@ export default function MobileMenu({ open, onClose, links }: MobileMenuProps) {
 
   const handleAnchor = (event: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     event.preventDefault()
-    const target = document.querySelector(href)
-    if (target instanceof HTMLElement) target.scrollIntoView({ behavior: prefersReducedMotion ? 'auto' : 'smooth', block: 'start' })
-    window.history.pushState(null, '', href)
+    const id = href.slice(1)
+    if (isHomePage) {
+      const target = document.getElementById(id)
+      if (target instanceof HTMLElement) {
+        target.scrollIntoView({ behavior: prefersReducedMotion ? 'auto' : 'smooth', block: 'start' })
+      }
+      window.history.replaceState(null, '', `#${id}`)
+    } else {
+      navigate(`/${locale}#${id}`)
+    }
     onClose()
   }
 

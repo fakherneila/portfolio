@@ -205,6 +205,21 @@ export function Contact() {
               </a>
             </p>
           </div>
+          <div className="mt-4 text-center text-sm text-muted space-y-1">
+            {SITE.phones.map((phone) => (
+              <p key={phone.raw}>
+                <span className="text-gold/70">
+                  {t('contact.phonesLabel', 'Phone')}:
+                </span>{' '}
+                <a
+                  href={`tel:${phone.raw}`}
+                  className="hover:text-gold transition-colors"
+                >
+                  {phone.number}
+                </a>
+              </p>
+            ))}
+          </div>
         </div>
       </Reveal>
     </Section>

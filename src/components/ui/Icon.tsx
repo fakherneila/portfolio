@@ -1,4 +1,5 @@
 import {
+  Activity,
   AlertCircle,
   AlertTriangle,
   ArrowDown,
@@ -42,6 +43,8 @@ import {
   Terminal,
   TestTube,
   TrendingUp,
+  Trophy,
+  Users,
   Workflow,
   X,
   Zap,
@@ -51,11 +54,11 @@ import {
 import { cn } from '@/lib/utils'
 
 const iconMap = {
-  Sun, Moon, Globe, Menu, X, ArrowRight, ArrowDown, ArrowUp, ArrowLeft, Download, Mail, Github,
+  Activity, Sun, Moon, Globe, Menu, X, ArrowRight, ArrowDown, ArrowUp, ArrowLeft, Download, Mail, Github,
   Linkedin, ExternalLink, Code, Database, Server, Cloud, Palette, Bot, Workflow, TrendingUp,
   TestTube, Figma, FileCode, Layers, Zap, Award, Briefcase, GraduationCap, MapPin, Calendar,
   CheckCircle2, AlertCircle, Loader2, Send, Sparkles, Terminal, Cpu, Boxes, GitBranch,
-  AlertTriangle, Check, Copy, Info, ChevronRight, ChevronLeft,
+  AlertTriangle, Check, Copy, Info, ChevronRight, ChevronLeft, Users, Trophy,
 } satisfies Record<string, LucideIcon>
 
 export type IconName = keyof typeof iconMap

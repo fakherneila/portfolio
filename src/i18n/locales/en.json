@@ -97,10 +97,19 @@
   "education": {
     "title": "Education",
     "subtitle": "Academic background",
-    "hackathons": { "label": "Hackathons" },
-    "leadership": { "label": "Leadership" },
-    "roles": { "participant": "Participant", "organizer": "Organizer" },
-    "award": { "firstPlace": "1st Place" }
+    "hackathons": {
+      "label": "Hackathons"
+    },
+    "leadership": {
+      "label": "Leadership"
+    },
+    "roles": {
+      "participant": "Participant",
+      "organizer": "Organizer"
+    },
+    "award": {
+      "firstPlace": "1st Place"
+    }
   },
   "blog": {
     "title": "Blog",
@@ -115,7 +124,13 @@
     "empty": "No posts yet. Check back soon.",
     "notFound": "Post not found",
     "notFoundDescription": "This post doesn't exist or was removed.",
-    "readingTime": "{{minutes}} min read"
+    "readingTime": "{{minutes}} min read",
+    "eyebrow": "Writing",
+    "comingSoon": {
+      "title": "Coming soon",
+      "description": "I'm working on a series of technical write-ups on full-stack engineering, testing, and AI. Check back soon — or reach out if you'd like to talk in the meantime.",
+      "cta": "Get in touch"
+    }
   },
   "contact": {
     "title": "Contact",
@@ -125,6 +140,7 @@
       "personal": "Personal",
       "professional": "Professional"
     },
+    "phonesLabel": "Phone",
     "availability": {
       "available": "Available for PFE internship",
       "range": "Feb 2026 – Aug 2026",
@@ -152,7 +168,11 @@
         "messageMin": "Message must be at least 20 characters"
       }
     },
-    "socials": { "github": "GitHub", "linkedin": "LinkedIn", "email": "Email" }
+    "socials": {
+      "github": "GitHub",
+      "linkedin": "LinkedIn",
+      "email": "Email"
+    }
   },
   "footer": {
     "tagline": "Building premium web experiences from Tunis.",

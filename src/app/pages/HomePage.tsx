@@ -4,7 +4,6 @@ import { Hero } from '@/components/sections/Hero'
 import { About } from '@/components/sections/About'
 import { Experience } from '@/components/sections/Experience'
 
-const BlogPreview = lazy(() => import('@/components/sections/BlogPreview').then((module) => ({ default: module.BlogPreview })))
 import { Skills } from '@/components/sections/Skills'
 import { ProjectsPreview } from '@/components/sections/ProjectsPreview'
 import { Education } from '@/components/sections/Education'
@@ -20,7 +19,6 @@ export default function HomePage() {
     <Skills />
     <ProjectsPreview />
     <Education />
-    <Suspense fallback={null}><BlogPreview /></Suspense>
     <Suspense fallback={null}><Contact /></Suspense>
   </>
 }

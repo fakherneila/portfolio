@@ -33,7 +33,7 @@ export function Hero() {
   )
 
   return (
-    <section className="relative min-h-[100svh] w-full overflow-hidden">
+    <section className="relative min-h-[100svh] w-full overflow-hidden bg-background/80">
       <Suspense fallback={<SceneLoader />}>
         <HeroScene />
       </Suspense>

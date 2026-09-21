@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next'
 import { Badge, Icon } from '@/components/ui'
 import LocaleLink from '@/components/ui/LocaleLink'
-import { SOCIALS } from '@/data/site'
+import { SOCIALS, SITE } from '@/data/site'
 import { useMediaQuery } from '@/hooks/useMediaQuery'
 
 export default function Footer() {
@@ -17,7 +17,7 @@ export default function Footer() {
   ]
   const handleBackToTop = () => window.scrollTo({ top: 0, behavior: prefersReducedMotion ? 'auto' : 'smooth' })
 
-  return <footer className="mt-24 border-t border-border">
+  return <footer className="relative z-10 mt-24 border-t border-border">
     <div className="mx-auto max-w-6xl px-6 py-12 md:px-8 md:py-16">
       <div className="grid grid-cols-1 gap-12 md:grid-cols-3">
         <div>
@@ -36,6 +36,9 @@ export default function Footer() {
         <div className="flex flex-col items-start gap-4 md:items-end">
           <Badge variant="success" pulse>{t('contact.availability.available')}</Badge>
           <p className="text-xs text-muted">{t('contact.availability.range')}</p>
+          <a href={`tel:${SITE.phones[0].raw}`} className="text-xs text-muted transition-colors hover:text-gold">
+            {SITE.phones[0].number}
+          </a>
           <button type="button" onClick={handleBackToTop} className="mt-2 inline-flex items-center gap-2 text-sm text-muted transition-colors hover:text-gold focus-visible:ring-2 focus-visible:ring-ring" aria-label={t('a11y.scrollToTop')}>
             <Icon name="ArrowUp" size={16} />{t('footer.backToTop')}
           </button>

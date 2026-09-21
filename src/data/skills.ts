@@ -81,6 +81,7 @@ export const SKILLS: SkillCategory[] = [
       { name: 'JUnit', slug: 'junit', icon: 'test-tube' },
       { name: 'Selenium', slug: 'selenium', icon: 'test-tube' },
       { name: 'Robot Framework', slug: 'robotframework', icon: 'bot' },
+      { name: 'k6', slug: 'k6', icon: 'activity' },
     ],
   },
   {

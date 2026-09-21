@@ -67,19 +67,69 @@ export const LEADERSHIP: LeadershipEntry[] = [
   },
 ] as const
 
-export const HACKATHONS: HackathonEntry[] = [
+export const HACKATHONS = [
+  // Participations
   {
-    id: 'imgoster',
+    id: 'imgoster-2025',
     name: 'Imgoster',
-    year: '2025',
+    year: 2025,
     role: 'participant',
+    award: { en: '1st Place', fr: '1ère Place' },
     highlight: true,
-    award: 'firstPlace',
   },
   {
-    id: 'hack-for-good',
-    name: 'Hack for Good',
-    year: '2024',
+    id: 'ideathon-3-2025',
+    name: 'Ideathon 3.0',
+    year: 2025,
+    role: 'participant',
+  },
+  {
+    id: 'ideathon-4-2026',
+    name: 'Ideathon 4.0',
+    year: 2026,
+    role: 'participant',
+  },
+  {
+    id: 'maze-1-2024',
+    name: 'The Maze 1.0',
+    year: 2024,
+    role: 'participant',
+  },
+  {
+    id: 'cybersummit-3-2025',
+    name: 'CyberSummit 3.0',
+    year: 2025,
+    role: 'participant',
+  },
+  {
+    id: 'shieldsup-2026',
+    name: 'ShieldsUp',
+    year: 2026,
+    role: 'participant',
+  },
+  // Organizer
+  {
+    id: 'maze-2-2025',
+    name: 'The Maze 2.0',
+    year: 2025,
     role: 'organizer',
   },
-]
+  {
+    id: 'cybersummit-4-2026',
+    name: 'CyberSummit 4.0',
+    year: 2026,
+    role: 'organizer',
+  },
+  {
+    id: 'mission-impossible-2026',
+    name: 'Mission Impossible',
+    year: 2026,
+    role: 'organizer',
+  },
+  {
+    id: 'coding-moon-2025',
+    name: 'Coding Moon Challenge',
+    year: 2025,
+    role: 'organizer',
+  },
+] as const

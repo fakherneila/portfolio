@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect, type ChangeEvent } from 'react'
 import ReactMarkdown from 'react-markdown'
-import remarkGfm from 'remark-gfm'
+
 import {
   Heading2,
   Heading3,
@@ -589,7 +589,7 @@ export default function AdminAddBlogPage() {
               ) : (
                 <div className="p-6 md:p-8">
                   <div className="prose prose-neutral dark:prose-invert max-w-none prose-headings:font-heading prose-headings:font-semibold prose-a:text-gold hover:prose-a:underline prose-pre:bg-surface-elevated prose-pre:border prose-pre:border-border">
-                    <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                    <ReactMarkdown>
                       {content}
                     </ReactMarkdown>
                   </div>

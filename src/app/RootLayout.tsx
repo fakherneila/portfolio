@@ -7,6 +7,8 @@ import PageTransition from '@/components/layout/PageTransition'
 import { useMediaQuery } from '@/hooks/useMediaQuery'
 import Navbar from '@/components/layout/Navbar'
 import Footer from '@/components/layout/Footer'
+import TechStackBackground from '@/components/three/TechStackBackground'
+import { ScrollToTop } from '@/components/layout/ScrollToTop'
 
 export default function RootLayout() {
   const { locale: localeParam } = useParams<{ locale: string }>()
@@ -37,16 +39,24 @@ export default function RootLayout() {
   if (syncedLocale !== locale) return null
 
   return (
-    <div className="flex min-h-screen flex-col bg-background font-body text-foreground">
-      <Navbar />
-      <main className="flex-1 pt-16 md:pt-[72px]" aria-label="Portfolio application">
-        <AnimatePresence mode="wait" initial={!prefersReducedMotion}>
-          <PageTransition key={location.pathname}>
-            <Outlet />
-          </PageTransition>
-        </AnimatePresence>
-      </main>
-      <Footer />
+    <div className="relative flex min-h-screen flex-col font-body text-foreground">
+      {/* Fixed full-page 3D tech-stack background — renders behind everything */}
+      <TechStackBackground />
+      <div className="relative z-10 flex flex-1 flex-col">
+        <ScrollToTop />
+        <Navbar />
+        <main
+          className="flex-1 pt-16 md:pt-[72px]"
+          aria-label="Portfolio application"
+        >
+          <AnimatePresence mode="wait" initial={!prefersReducedMotion}>
+            <PageTransition key={location.pathname}>
+              <Outlet />
+            </PageTransition>
+          </AnimatePresence>
+        </main>
+        <Footer />
+      </div>
     </div>
   )
 }

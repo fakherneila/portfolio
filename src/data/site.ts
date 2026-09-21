@@ -7,6 +7,10 @@ export const SITE = {
     primary: 'neilafakher8@gmail.com',
     professional: 'f.neila@clevertech-france.fr',
   },
+  phones: [
+    { label: 'Mobile', number: '+216 26 511 871', raw: '+21626511871' },
+    { label: 'Mobile', number: '+216 25 126 528', raw: '+21625126528' },
+  ],
   email: 'neilafakher8@gmail.com',
   roles: [
     'Software Engineer',

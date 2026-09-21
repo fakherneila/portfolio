@@ -20,8 +20,8 @@ export type LeadershipEntry = {
 export type HackathonEntry = {
   id: string
   name: string
-  year: string
+  year: number | string
   role: 'participant' | 'organizer'
   highlight?: boolean
-  award?: 'firstPlace'
+  award?: LocalizedText | string
 }

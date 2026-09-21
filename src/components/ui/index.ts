@@ -15,4 +15,4 @@ export { Stat } from './Stat'
 export { FormField } from './FormField'
 export { ProjectCard } from './ProjectCard'
 export { ProjectFilter } from './ProjectFilter'
-export { BlogCard } from './BlogCard'
+

@@ -10,6 +10,7 @@ type SkillCardProps = {
 }
 
 const fallbackIcons: Record<string, IconName> = {
+  activity: 'Activity',
   bot: 'Bot',
   cloud: 'Cloud',
   code: 'Code',
