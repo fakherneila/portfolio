@@ -67,7 +67,7 @@ export const LEADERSHIP: LeadershipEntry[] = [
   },
 ] as const
 
-export const HACKATHONS = [
+export const HACKATHONS: HackathonEntry[] = [
   // Participations
   {
     id: 'imgoster-2025',
