@@ -136,6 +136,11 @@
     "title": "Contact",
     "subtitle": "Let's build something",
     "orReachMe": "Or reach me directly",
+    "labels": {
+      "personal": "Personal",
+      "professional": "Professional",
+      "phone": "Phone"
+    },
     "emailsLabel": {
       "personal": "Personal",
       "professional": "Professional"

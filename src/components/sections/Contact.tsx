@@ -35,13 +35,20 @@ export function Contact() {
   const onSubmit = async (values: ContactFormValues) => {
     setStatus('idle')
     try {
-      const res = await fetch('/api/contact', {
+      const body = new URLSearchParams({
+        'form-name': 'contact',
+        name: values.name,
+        email: values.email,
+        subject: values.subject,
+        message: values.message,
+        website: values.website ?? '',
+      }).toString()
+      const res = await fetch('/', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(values),
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body,
       })
-      const data = await res.json()
-      if (!res.ok || !data.ok) throw new Error(data.error ?? 'Send failed')
+      if (!res.ok) throw new Error(`Netlify Forms returned ${res.status}`)
       setStatus('success')
       reset()
     } catch (err) {
@@ -70,9 +77,12 @@ export function Contact() {
         <div className="mx-auto mt-12 max-w-2xl">
           <Card className="p-6 md:p-10">
             <form
+              name="contact"
               onSubmit={handleSubmit(onSubmit)}
               className="space-y-5"
               noValidate
+              data-netlify="true"
+              data-netlify-honeypot="website"
             >
               <div className="absolute -left-[9999px]" aria-hidden="true">
                 <input
@@ -159,9 +169,64 @@ export function Contact() {
         </div>
       </Reveal>
       <Reveal delay={0.3}>
-        <div className="mt-12 flex flex-col items-center gap-4">
-          <p className="text-sm text-muted">{t('contact.orReachMe')}</p>
-          <div className="flex items-center gap-3">
+        <div className="mx-auto mt-16 max-w-3xl">
+          <p className="mb-6 text-center text-sm uppercase tracking-widest text-muted">
+            {t('contact.orReachMe')}
+          </p>
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+            <a
+              href={`mailto:${SITE.emails.personal}`}
+              className="group flex items-center gap-3 rounded-xl border border-border bg-surface/60 px-4 py-3 transition-all duration-300 hover:border-gold/40 hover:bg-surface"
+            >
+              <div className="rounded-full bg-gold/10 p-2 text-gold transition-colors group-hover:bg-gold/20">
+                <Icon name="Mail" size={16} />
+              </div>
+              <div className="min-w-0 flex-1">
+                <p className="text-xs uppercase tracking-widest text-muted">
+                  {t('contact.labels.personal')}
+                </p>
+                <p className="truncate text-sm text-foreground transition-colors group-hover:text-gold">
+                  {SITE.emails.personal}
+                </p>
+              </div>
+            </a>
+            <a
+              href={`mailto:${SITE.emails.professional}`}
+              className="group flex items-center gap-3 rounded-xl border border-border bg-surface/60 px-4 py-3 transition-all duration-300 hover:border-gold/40 hover:bg-surface"
+            >
+              <div className="rounded-full bg-gold/10 p-2 text-gold transition-colors group-hover:bg-gold/20">
+                <Icon name="Briefcase" size={16} />
+              </div>
+              <div className="min-w-0 flex-1">
+                <p className="text-xs uppercase tracking-widest text-muted">
+                  {t('contact.labels.professional')}
+                </p>
+                <p className="truncate text-sm text-foreground transition-colors group-hover:text-gold">
+                  {SITE.emails.professional}
+                </p>
+              </div>
+            </a>
+            {SITE.phones.map((phone) => (
+              <a
+                key={phone.raw}
+                href={`tel:${phone.raw}`}
+                className="group flex items-center gap-3 rounded-xl border border-border bg-surface/60 px-4 py-3 transition-all duration-300 hover:border-gold/40 hover:bg-surface"
+              >
+                <div className="rounded-full bg-gold/10 p-2 text-gold transition-colors group-hover:bg-gold/20">
+                  <Icon name="Phone" size={16} />
+                </div>
+                <div className="min-w-0 flex-1">
+                  <p className="text-xs uppercase tracking-widest text-muted">
+                    {t('contact.labels.phone')}
+                  </p>
+                  <p className="truncate text-sm text-foreground transition-colors group-hover:text-gold">
+                    {phone.number}
+                  </p>
+                </div>
+              </a>
+            ))}
+          </div>
+          <div className="mt-8 flex items-center justify-center gap-3">
             {SOCIALS.map((social) => (
               <a
                 key={social.label}
@@ -179,45 +244,6 @@ export function Contact() {
               >
                 <Icon name={social.icon} size={20} />
               </a>
-            ))}
-          </div>
-          <div className="mt-6 text-center text-sm text-muted space-y-1">
-            <p>
-              <span className="text-gold/70">
-                {t('contact.emailsLabel.personal')}:
-              </span>{' '}
-              <a
-                href={`mailto:${SITE.emails.primary}`}
-                className="hover:text-gold transition-colors"
-              >
-                {SITE.emails.primary}
-              </a>
-            </p>
-            <p>
-              <span className="text-gold/70">
-                {t('contact.emailsLabel.professional')}:
-              </span>{' '}
-              <a
-                href={`mailto:${SITE.emails.professional}`}
-                className="hover:text-gold transition-colors"
-              >
-                {SITE.emails.professional}
-              </a>
-            </p>
-          </div>
-          <div className="mt-4 text-center text-sm text-muted space-y-1">
-            {SITE.phones.map((phone) => (
-              <p key={phone.raw}>
-                <span className="text-gold/70">
-                  {t('contact.phonesLabel', 'Phone')}:
-                </span>{' '}
-                <a
-                  href={`tel:${phone.raw}`}
-                  className="hover:text-gold transition-colors"
-                >
-                  {phone.number}
-                </a>
-              </p>
             ))}
           </div>
         </div>

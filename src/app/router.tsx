@@ -13,37 +13,44 @@ import AdminAddBlogPage from '@/app/pages/AdminAddBlogPage'
 import AdminPostsPage from '@/app/pages/AdminPostsPage'
 
 // The unprefixed entry redirects first; every content route then lives under a locale layout.
-const router = createBrowserRouter([
+const router = createBrowserRouter(
+  [
+    {
+      path: '/',
+      children: [
+        { index: true, element: <LocaleRedirect /> },
+        {
+          path: ':locale',
+          element: <RootLayout />,
+          children: [
+            { index: true, element: <HomePage /> },
+            { path: 'blog', element: <BlogComingSoonPage /> },
+            { path: 'blog/:slug', element: <BlogComingSoonPage /> },
+            { path: 'projects', element: <ProjectsPage /> },
+            { path: 'projects/:slug', element: <ProjectDetailPage /> },
+            { path: '*', element: <NotFoundPage /> },
+          ],
+        },
+        {
+          path: 'admin',
+          element: <AdminLayout />,
+          errorElement: <ErrorPage />,
+          children: [
+            { index: true, element: <Navigate to="add-blog" replace /> },
+            { path: 'login', element: <AdminLoginPage /> },
+            { path: 'add-blog', element: <AdminAddBlogPage /> },
+            { path: 'posts', element: <AdminPostsPage /> },
+          ],
+        },
+        { path: '*', element: <Navigate to="/" replace /> },
+      ],
+    },
+  ],
   {
-    path: '/',
-    children: [
-      { index: true, element: <LocaleRedirect /> },
-      {
-        path: ':locale',
-        element: <RootLayout />,
-        children: [
-          { index: true, element: <HomePage /> },
-          { path: 'blog', element: <BlogComingSoonPage /> },
-          { path: 'blog/:slug', element: <BlogComingSoonPage /> },
-          { path: 'projects', element: <ProjectsPage /> },
-          { path: 'projects/:slug', element: <ProjectDetailPage /> },
-          { path: '*', element: <NotFoundPage /> },
-        ],
-      },
-      {
-        path: 'admin',
-        element: <AdminLayout />,
-        errorElement: <ErrorPage />,
-        children: [
-          { index: true, element: <Navigate to="add-blog" replace /> },
-          { path: 'login', element: <AdminLoginPage /> },
-          { path: 'add-blog', element: <AdminAddBlogPage /> },
-          { path: 'posts', element: <AdminPostsPage /> },
-        ],
-      },
-      { path: '*', element: <Navigate to="/" replace /> },
-    ],
+    future: {
+      v7_relativeSplatPath: true,
+    },
   },
-])
+)
 
 export default router

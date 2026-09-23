@@ -4,7 +4,7 @@ export const SITE = {
   name: 'Fakher Neila',
   url: 'https://fakher-neila.example',
   emails: {
-    primary: 'neilafakher8@gmail.com',
+    personal: 'neilafakher8@gmail.com',
     professional: 'f.neila@clevertech-france.fr',
   },
   phones: [

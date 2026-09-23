@@ -27,6 +27,7 @@ import {
   GraduationCap,
   Layers,
   Linkedin,
+  Phone,
   Info,
   ChevronLeft,
   ChevronRight,
@@ -54,11 +55,57 @@ import {
 import { cn } from '@/lib/utils'
 
 const iconMap = {
-  Activity, Sun, Moon, Globe, Menu, X, ArrowRight, ArrowDown, ArrowUp, ArrowLeft, Download, Mail, Github,
-  Linkedin, ExternalLink, Code, Database, Server, Cloud, Palette, Bot, Workflow, TrendingUp,
-  TestTube, Figma, FileCode, Layers, Zap, Award, Briefcase, GraduationCap, MapPin, Calendar,
-  CheckCircle2, AlertCircle, Loader2, Send, Sparkles, Terminal, Cpu, Boxes, GitBranch,
-  AlertTriangle, Check, Copy, Info, ChevronRight, ChevronLeft, Users, Trophy,
+  Activity,
+  Sun,
+  Moon,
+  Globe,
+  Menu,
+  X,
+  ArrowRight,
+  ArrowDown,
+  ArrowUp,
+  ArrowLeft,
+  Download,
+  Mail,
+  Github,
+  Linkedin,
+  Phone,
+  ExternalLink,
+  Code,
+  Database,
+  Server,
+  Cloud,
+  Palette,
+  Bot,
+  Workflow,
+  TrendingUp,
+  TestTube,
+  Figma,
+  FileCode,
+  Layers,
+  Zap,
+  Award,
+  Briefcase,
+  GraduationCap,
+  MapPin,
+  Calendar,
+  CheckCircle2,
+  AlertCircle,
+  Loader2,
+  Send,
+  Sparkles,
+  Terminal,
+  Cpu,
+  Boxes,
+  GitBranch,
+  AlertTriangle,
+  Check,
+  Copy,
+  Info,
+  ChevronRight,
+  ChevronLeft,
+  Users,
+  Trophy,
 } satisfies Record<string, LucideIcon>
 
 export type IconName = keyof typeof iconMap
@@ -70,7 +117,19 @@ type IconProps = {
   strokeWidth?: number
 }
 
-export function Icon({ name, size = 18, className, strokeWidth = 1.75 }: IconProps) {
+export function Icon({
+  name,
+  size = 18,
+  className,
+  strokeWidth = 1.75,
+}: IconProps) {
   const LucideIcon = iconMap[name]
-  return <LucideIcon aria-hidden="true" className={cn('shrink-0', className)} size={size} strokeWidth={strokeWidth} />
+  return (
+    <LucideIcon
+      aria-hidden="true"
+      className={cn('shrink-0', className)}
+      size={size}
+      strokeWidth={strokeWidth}
+    />
+  )
 }
