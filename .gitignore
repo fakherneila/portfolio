@@ -22,3 +22,9 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+
+# Never commit anything that looks like an env file
+.env*
+*.env
+.env copy*
