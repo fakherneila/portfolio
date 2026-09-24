@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Forms</title>
+    <meta name="robots" content="noindex, nofollow" />
+  </head>
+  <body>
+    <!--
+    Static skeleton form for Netlify's build-time form detection.
+    Netlify scans static HTML at deploy time; it cannot see forms
+    rendered by JavaScript/React. This file exists ONLY to make the
+    "contact" form discoverable.
+
+    Field names MUST match the React form in src/components/sections/
+    Contact.tsx exactly — same form name, same input names, same
+    honeypot field. If you add a new field to the React form, add it
+    here too or the submission will be rejected.
+  -->
+    <form
+      name="contact"
+      method="POST"
+      data-netlify="true"
+      netlify-honeypot="website"
+      hidden
+    >
+      <input type="hidden" name="form-name" value="contact" />
+      <input type="text" name="name" />
+      <input type="email" name="email" />
+      <input type="text" name="subject" />
+      <textarea name="message"></textarea>
+      <input type="text" name="website" />
+    </form>
+  </body>
+</html>

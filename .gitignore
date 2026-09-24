@@ -25,6 +25,9 @@ dist-ssr
 
 
 # Never commit anything that looks like an env file
+.env
+.env.*
+!.env.example
 .env*
 *.env
 .env copy*
