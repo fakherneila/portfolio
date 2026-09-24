@@ -1,5 +1,11 @@
 import { Canvas, useFrame } from '@react-three/fiber'
-import { Suspense, useEffect, useMemo, useRef, type MutableRefObject } from 'react'
+import {
+  Suspense,
+  useEffect,
+  useMemo,
+  useRef,
+  type MutableRefObject,
+} from 'react'
 import * as THREE from 'three'
 import type { PerformanceTier } from '@/hooks/usePerformanceTier'
 
@@ -33,6 +39,12 @@ const LOGOS = [
   'postman',
   'robotframework',
 ] as const
+
+const LOGO_COUNT = {
+  high: 25,
+  medium: 12,
+  low: 8,
+} as const
 
 // ─── Deterministic seeded pseudo-random (Park-Miller LCG) ─────────────────────
 function makeRand(seed: number) {
@@ -118,6 +130,7 @@ interface TechLogoCloudProps {
 
 function TechLogoCloud({
   theme,
+  tier,
   mouseRef,
   scrollRef,
   reducedMotion,
@@ -169,7 +182,7 @@ function TechLogoCloud({
       // Dark: [0.22, 0.38]
       const darkOpacity = 0.22 + rand() * 0.16
       // Light: [0.10, 0.18]
-      const lightOpacity = 0.10 + rand() * 0.08
+      const lightOpacity = 0.1 + rand() * 0.08
 
       // Initial rotations
       const baseRotX = (rand() * 2 - 1) * 0.3
@@ -242,7 +255,8 @@ function TechLogoCloud({
         mat.blending = isDark ? THREE.AdditiveBlending : THREE.NormalBlending
         const spec = specs[i]
         if (spec) {
-          mat.opacity = (isDark ? spec.darkOpacity : spec.lightOpacity) * opacityMultiplier
+          mat.opacity =
+            (isDark ? spec.darkOpacity : spec.lightOpacity) * opacityMultiplier
         }
         mat.needsUpdate = true
       }
@@ -285,12 +299,17 @@ function TechLogoCloud({
     orbitGroup.rotation.y += delta * 0.02
     orbitGroup.rotation.x = Math.sin(t * 0.05) * 0.05
 
-    // Layer 6: Ambient shimmer trigger (every 6-12s, brief 40% pulse for 1.5s)
-    if (t - lastShimmerTime.current >= nextShimmerInterval.current) {
+    // Layer 6: Ambient shimmer is reserved for high-tier devices.
+    if (
+      tier === 'high' &&
+      t - lastShimmerTime.current >= nextShimmerInterval.current
+    ) {
       lastShimmerTime.current = t
       nextShimmerInterval.current = 6 + Math.random() * 6
       if (count > 0) {
-        const randIdx = Math.floor(Math.random() * Math.min(count, specs.length))
+        const randIdx = Math.floor(
+          Math.random() * Math.min(count, specs.length),
+        )
         const st = logoStatesRef.current[randIdx]
         if (st) {
           st.targetOpacity = st.baseOpacity * 1.4
@@ -309,33 +328,50 @@ function TechLogoCloud({
       // Layer 1 & 4: Lissajous curve drift with depth factor
       group.position.x =
         spec.baseX +
-        Math.sin(t * spec.speedX + spec.phaseX) * spec.radiusX * spec.depthFactor
+        Math.sin(t * spec.speedX + spec.phaseX) *
+          spec.radiusX *
+          spec.depthFactor
       group.position.y =
         spec.baseY +
-        Math.cos(t * spec.speedY + spec.phaseY) * spec.radiusY * spec.depthFactor
+        Math.cos(t * spec.speedY + spec.phaseY) *
+          spec.radiusY *
+          spec.depthFactor
       group.position.z =
         spec.baseZ +
-        Math.sin(t * spec.speedZ + spec.phaseZ) * (spec.radiusZ * 0.4) * spec.depthFactor
+        Math.sin(t * spec.speedZ + spec.phaseZ) *
+          (spec.radiusZ * 0.4) *
+          spec.depthFactor
 
-      // Layer 2 & 4: Self-rotation & wobble with depth factor
+      // Layer 2: Self-rotation; wobble is reserved for high-tier devices.
       group.rotation.y = t * (spec.rotSpeedY * spec.depthFactor) + spec.baseRotY
-      group.rotation.x = spec.baseRotX + Math.sin(t * 0.3 + spec.phaseRotX) * 0.15
-      group.rotation.z = spec.baseRotZ + Math.sin(t * 0.2 + spec.phaseRotZ) * 0.08
+      group.rotation.x =
+        tier === 'high'
+          ? spec.baseRotX + Math.sin(t * 0.3 + spec.phaseRotX) * 0.15
+          : spec.baseRotX
+      group.rotation.z =
+        tier === 'high'
+          ? spec.baseRotZ + Math.sin(t * 0.2 + spec.phaseRotZ) * 0.08
+          : spec.baseRotZ
 
-      // Layer 6: Ambient shimmer opacity damping
+      // Layer 6: Ambient shimmer opacity damping on high-tier devices.
       const state = logoStatesRef.current[i]
       if (state) {
         // Reset shimmer pulse if duration elapsed
-        if (t >= state.shimmerResetAt && state.targetOpacity !== state.baseOpacity) {
+        if (
+          t >= state.shimmerResetAt &&
+          state.targetOpacity !== state.baseOpacity
+        ) {
           state.targetOpacity = state.baseOpacity
         }
 
-        state.currentOpacity = THREE.MathUtils.damp(
-          state.currentOpacity,
-          state.targetOpacity,
-          2.5,
-          delta,
-        )
+        if (tier === 'high') {
+          state.currentOpacity = THREE.MathUtils.damp(
+            state.currentOpacity,
+            state.targetOpacity,
+            2.5,
+            delta,
+          )
+        }
 
         const finalOpacity = state.currentOpacity * opacityMultiplier
         const mainMat = mainMaterialRefs.current[i]
@@ -355,7 +391,7 @@ function TechLogoCloud({
   return (
     <group ref={rootGroupRef}>
       <group ref={orbitGroupRef}>
-        {specs.slice(0, count).map((spec, i) => (
+        {specs.slice(0, Math.min(count, LOGO_COUNT[tier])).map((spec, i) => (
           <group
             key={spec.name}
             ref={(el) => {
@@ -375,10 +411,15 @@ function TechLogoCloud({
                 map={getSvgTexture(spec.url)}
                 color={logoColor}
                 transparent
-                opacity={(isDark ? spec.darkOpacity : spec.lightOpacity) * opacityMultiplier}
+                opacity={
+                  (isDark ? spec.darkOpacity : spec.lightOpacity) *
+                  opacityMultiplier
+                }
                 depthWrite={false}
                 side={THREE.DoubleSide}
-                blending={isDark ? THREE.AdditiveBlending : THREE.NormalBlending}
+                blending={
+                  isDark ? THREE.AdditiveBlending : THREE.NormalBlending
+                }
               />
             </mesh>
 
@@ -430,7 +471,12 @@ export default function TechStackBackgroundInner({
   isMobile,
 }: TechStackBackgroundInnerProps) {
   // DPR: [1, 1.5] on high, [1, 1.25] on medium, 1 on low
-  const dpr = tier === 'high' ? ([1, 1.5] as [number, number]) : tier === 'medium' ? ([1, 1.25] as [number, number]) : 1
+  const dpr =
+    tier === 'high'
+      ? ([1, 1.5] as [number, number])
+      : tier === 'medium'
+        ? ([1, 1.25] as [number, number])
+        : 1
 
   return (
     <Canvas

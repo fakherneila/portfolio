@@ -25,11 +25,16 @@ import { useMediaQuery } from '@/hooks/useMediaQuery'
 import { usePerformanceTier } from '@/hooks/usePerformanceTier'
 import { useWebGLSupport } from './useWebGLSupport'
 
-const TechStackBackgroundInner = lazy(() => import('./TechStackBackgroundInner'))
+const TechStackBackgroundInner = lazy(
+  () => import('./TechStackBackgroundInner'),
+)
 
 export default function TechStackBackground() {
   const { theme } = useTheme()
-  const { tier } = usePerformanceTier()
+  const { tier } = usePerformanceTier({
+    minTier: 'medium',
+    allowLowTierFallback: true,
+  })
   const reducedMotion = useMediaQuery('(prefers-reduced-motion: reduce)')
   const webGLSupported = useWebGLSupport()
   const { pathname } = useLocation()
@@ -56,9 +61,11 @@ export default function TechStackBackground() {
 
   // Pause render loop when tab is hidden
   useEffect(() => {
-    const handleVisibility = () => setFrameloop(document.hidden ? 'demand' : 'always')
+    const handleVisibility = () =>
+      setFrameloop(document.hidden ? 'demand' : 'always')
     document.addEventListener('visibilitychange', handleVisibility)
-    return () => document.removeEventListener('visibilitychange', handleVisibility)
+    return () =>
+      document.removeEventListener('visibilitychange', handleVisibility)
   }, [])
 
   // Track normalized scroll position [0, ...] for subtle group parallax
@@ -103,14 +110,14 @@ export default function TechStackBackground() {
   const isTablet = viewportWidth >= 640 && viewportWidth < 1024
 
   let count = 25
-  if (isMobile) count = 10
+  if (isMobile) count = 12
   else if (isTablet) count = 18
 
-  if (tier === 'medium') count = Math.min(count, 15)
-  if (tier === 'low') count = 0
+  if (tier === 'medium') count = Math.min(count, 12)
+  if (tier === 'low') count = 8
 
-  // Gate: no canvas on low-tier or unsupported WebGL
-  if (!webGLSupported || tier === 'low' || count === 0) return null
+  // Gate: no canvas when WebGL is unavailable or motion should be reduced
+  if (!webGLSupported || reducedMotion) return null
 
   return (
     <div
@@ -122,8 +129,8 @@ export default function TechStackBackground() {
         right: 0,
         bottom: 0,
         width: '100vw',
-        height: '100dvh', /* dvh handles mobile browser chrome */
-        zIndex: 0,        /* behind content, above page background */
+        height: '100dvh' /* dvh handles mobile browser chrome */,
+        zIndex: 0 /* behind content, above page background */,
         pointerEvents: 'none',
         overflow: 'hidden',
       }}
