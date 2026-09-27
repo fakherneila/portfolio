@@ -1,7 +1,8 @@
 import { lazy, Suspense, useContext, useEffect, useMemo, useRef } from 'react'
 import { motion } from 'framer-motion'
 import { useTranslation } from 'react-i18next'
-import { SITE } from '@/data/site'
+import { getCvPath, SITE } from '@/data/site'
+import { useLocale } from '@/hooks/useLocale'
 import { useMediaQuery } from '@/hooks/useMediaQuery'
 import SceneLoader from '@/components/three/SceneLoader'
 import { Button, Icon, Reveal, Typewriter } from '@/components/ui'
@@ -21,6 +22,7 @@ function scrollToSection(id: string) {
 
 export function Hero() {
   const { t } = useTranslation()
+  const { locale } = useLocale()
   const heroRef = useRef<HTMLElement>(null)
   const { setHeroVisible } = useContext(SceneContext)
   const prefersReducedMotion = useMediaQuery('(prefers-reduced-motion: reduce)')
@@ -101,7 +103,7 @@ export function Hero() {
                 variant="secondary"
                 size="lg"
                 as="a"
-                href="/Cv.pdf"
+                href={getCvPath(locale)}
                 external
                 icon="Download"
                 className="border border-gold/60 text-gold hover:border-gold hover:text-gold-bright"

@@ -33,6 +33,19 @@ export const SOCIALS: ReadonlyArray<{
   icon: IconName
 }> = [
   { label: 'GitHub', href: 'https://github.com/', icon: 'Github' },
-  { label: 'LinkedIn', href: 'https://www.linkedin.com/in/ne%C3%AFla-fakher-a00901247', icon: 'Linkedin' },
+  {
+    label: 'LinkedIn',
+    href: 'https://www.linkedin.com/in/ne%C3%AFla-fakher-a00901247',
+    icon: 'Linkedin',
+  },
   { label: 'Email', href: 'mailto:neilafakher8@gmail.com', icon: 'Mail' },
 ]
+
+/**
+ * Returns the correct CV file path for the given locale.
+ * English -> /cv.pdf
+ * French  -> /cv-fr.pdf
+ */
+export function getCvPath(locale: 'en' | 'fr'): string {
+  return locale === 'fr' ? '/cv-fr.pdf' : '/cv.pdf'
+}
