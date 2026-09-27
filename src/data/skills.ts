@@ -87,10 +87,17 @@ export const SKILLS: SkillCategory[] = [
   {
     id: 'design',
     labelKey: 'design',
+    skills: [{ name: 'Figma', slug: 'figma', icon: 'figma' }],
+  },
+  {
+    id: 'apiTesting',
+    labelKey: 'apiTesting',
     skills: [
-      { name: 'Figma', slug: 'figma', icon: 'figma' },
       { name: 'Postman', slug: 'postman', icon: 'send' },
-      { name: 'UI/UX Design', icon: 'palette' },
+      { name: 'Bruno', slug: 'bruno', icon: 'send' },
+      { name: 'Insomnia', slug: 'insomnia', icon: 'send' },
+      { name: 'Thunder Client', slug: 'thunderclient', icon: 'zap' },
+      { name: 'curl', slug: 'curl', icon: 'terminal' },
     ],
   },
 ]

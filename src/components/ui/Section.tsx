@@ -8,6 +8,7 @@ type SectionProps = {
   container?: boolean
   py?: 'sm' | 'md' | 'lg' | 'xl'
   reveal?: boolean
+  opaque?: boolean
   children: ReactNode
 }
 
@@ -24,6 +25,7 @@ export function Section({
   container = true,
   py = 'md',
   reveal = false,
+  opaque = false,
   children,
 }: SectionProps) {
   const content = container ? (
@@ -34,7 +36,15 @@ export function Section({
     children
   )
   return (
-    <section id={id} className={cn('w-full', padding[py], className)}>
+    <section
+      id={id}
+      className={cn(
+        'relative w-full',
+        padding[py],
+        opaque && 'bg-background',
+        className,
+      )}
+    >
       {reveal ? <Reveal>{content}</Reveal> : content}
     </section>
   )

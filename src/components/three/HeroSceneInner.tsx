@@ -1,5 +1,5 @@
 import { Canvas } from '@react-three/fiber'
-import { Suspense, type MutableRefObject } from 'react'
+import { Suspense, useEffect, useState, type MutableRefObject } from 'react'
 import type { PerformanceTier } from '@/hooks/usePerformanceTier'
 import GoldIcosahedron from './GoldIcosahedron'
 import ParticleField from './ParticleField'
@@ -21,7 +21,17 @@ export default function HeroSceneInner({
   frameloop,
   mouseRef,
 }: HeroSceneInnerProps) {
-  const count = tier === 'high' ? 1000 : tier === 'medium' ? 600 : 300
+  const count = tier === 'high' ? 600 : tier === 'medium' ? 300 : 0
+  const [tabVisible, setTabVisible] = useState(
+    typeof document !== 'undefined' ? !document.hidden : true,
+  )
+
+  useEffect(() => {
+    const handleVisibility = () => setTabVisible(!document.hidden)
+    document.addEventListener('visibilitychange', handleVisibility)
+    return () =>
+      document.removeEventListener('visibilitychange', handleVisibility)
+  }, [])
   return (
     <Canvas
       dpr={tier === 'high' ? [1, 1.5] : 1}
@@ -31,7 +41,7 @@ export default function HeroSceneInner({
         alpha: true,
         powerPreference: 'high-performance',
       }}
-      frameloop={frameloop}
+      frameloop={tabVisible ? frameloop : 'demand'}
       onCreated={({ gl }) => gl.setClearColor(0x000000, 0)}
     >
       <ambientLight intensity={theme === 'dark' ? 0.4 : 0.7} color="#D4AF37" />

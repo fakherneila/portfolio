@@ -1,10 +1,11 @@
-import { lazy, Suspense, useMemo } from 'react'
+import { lazy, Suspense, useContext, useEffect, useMemo, useRef } from 'react'
 import { motion } from 'framer-motion'
 import { useTranslation } from 'react-i18next'
 import { SITE } from '@/data/site'
 import { useMediaQuery } from '@/hooks/useMediaQuery'
 import SceneLoader from '@/components/three/SceneLoader'
 import { Button, Icon, Reveal, Typewriter } from '@/components/ui'
+import { SceneContext } from '@/components/three/SceneContext'
 
 const HeroScene = lazy(() => import('@/components/three/HeroScene'))
 
@@ -20,6 +21,8 @@ function scrollToSection(id: string) {
 
 export function Hero() {
   const { t } = useTranslation()
+  const heroRef = useRef<HTMLElement>(null)
+  const { setHeroVisible } = useContext(SceneContext)
   const prefersReducedMotion = useMediaQuery('(prefers-reduced-motion: reduce)')
   const roles = useMemo(
     () =>
@@ -32,12 +35,27 @@ export function Hero() {
     [t],
   )
 
+  useEffect(() => {
+    const element = heroRef.current
+    if (!element || typeof IntersectionObserver === 'undefined') return
+
+    const observer = new IntersectionObserver(
+      ([entry]) => setHeroVisible(Boolean(entry?.isIntersecting)),
+      { threshold: 0.05 },
+    )
+    observer.observe(element)
+    return () => observer.disconnect()
+  }, [setHeroVisible])
+
   return (
-    <section className="relative min-h-[100svh] w-full overflow-hidden bg-background/80">
+    <section
+      ref={heroRef}
+      className="relative min-h-[100svh] w-full overflow-hidden"
+    >
       <Suspense fallback={<SceneLoader />}>
         <HeroScene />
       </Suspense>
-      <div className="pointer-events-none absolute inset-0 z-[1] bg-gradient-to-b from-background/30 via-transparent to-background" />
+      <div className="pointer-events-none absolute inset-0 z-[1] bg-gradient-to-b from-background/30 via-transparent to-transparent" />
       <div className="relative z-10 flex min-h-[100svh] flex-col items-center justify-center px-6 text-center">
         <div
           aria-hidden

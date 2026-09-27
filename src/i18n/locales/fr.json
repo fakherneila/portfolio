@@ -62,7 +62,8 @@
       "backend": "Backend",
       "ai": "IA & Automatisation",
       "testing": "Tests & QA",
-      "design": "Design"
+      "design": "Design",
+      "apiTesting": "Tests d'API"
     }
   },
   "projects": {

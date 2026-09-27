@@ -38,17 +38,22 @@ export default function TechStackBackground() {
   const reducedMotion = useMediaQuery('(prefers-reduced-motion: reduce)')
   const webGLSupported = useWebGLSupport()
   const { pathname } = useLocation()
-
   const mouseRef = useRef({ x: 0, y: 0 })
   const scrollRef = useRef({ y: 0 })
 
-  const [frameloop, setFrameloop] = useState<'always' | 'demand'>(() =>
-    typeof document !== 'undefined' && document.hidden ? 'demand' : 'always',
+  const [tabHidden, setTabHidden] = useState(
+    () => typeof document !== 'undefined' && document.hidden,
   )
 
   const [viewportWidth, setViewportWidth] = useState(() =>
     typeof window !== 'undefined' ? window.innerWidth : 1200,
   )
+  const [mounted, setMounted] = useState(false)
+
+  useEffect(() => {
+    const id = window.setTimeout(() => setMounted(true), 800)
+    return () => window.clearTimeout(id)
+  }, [])
 
   // Track viewport resize to dynamically adjust logo count & mobile scale
   useEffect(() => {
@@ -59,10 +64,9 @@ export default function TechStackBackground() {
     return () => window.removeEventListener('resize', handleResize)
   }, [])
 
-  // Pause render loop when tab is hidden
+  // Do not render while the browser tab is hidden.
   useEffect(() => {
-    const handleVisibility = () =>
-      setFrameloop(document.hidden ? 'demand' : 'always')
+    const handleVisibility = () => setTabHidden(document.hidden)
     document.addEventListener('visibilitychange', handleVisibility)
     return () =>
       document.removeEventListener('visibilitychange', handleVisibility)
@@ -101,8 +105,9 @@ export default function TechStackBackground() {
 
   // Route-aware adjustments
   const hidden = pathname.startsWith('/admin') || pathname.includes('/admin')
-  const dimmed = /\/projects\/[^/]+/.test(pathname)
-  if (hidden) return null
+  const isProjectDetail = /\/projects\/[^/]+\/?$/.test(pathname)
+  const dimmed = isProjectDetail
+  if (hidden || tabHidden || !mounted) return null
   const opacityMultiplier = dimmed ? 0.7 : 1
 
   // Responsive logo count
@@ -116,8 +121,8 @@ export default function TechStackBackground() {
   if (tier === 'medium') count = Math.min(count, 12)
   if (tier === 'low') count = 8
 
-  // Gate: no canvas when WebGL is unavailable or motion should be reduced
-  if (!webGLSupported || reducedMotion) return null
+  // Gate only when WebGL is unavailable; reduced motion renders a static cloud.
+  if (!webGLSupported) return null
 
   return (
     <div
@@ -133,6 +138,7 @@ export default function TechStackBackground() {
         zIndex: 0 /* behind content, above page background */,
         pointerEvents: 'none',
         overflow: 'hidden',
+        opacity: 1,
       }}
     >
       {/* The 3D canvas — fills this container 100% */}
@@ -141,7 +147,7 @@ export default function TechStackBackground() {
           <TechStackBackgroundInner
             theme={theme}
             tier={tier}
-            frameloop={reducedMotion ? 'demand' : frameloop}
+            frameloop="always"
             mouseRef={mouseRef}
             scrollRef={scrollRef}
             reducedMotion={reducedMotion}
@@ -160,8 +166,8 @@ export default function TechStackBackground() {
           pointerEvents: 'none',
           background:
             theme === 'dark'
-              ? 'radial-gradient(ellipse at center, transparent 0%, transparent 40%, rgba(10,10,10,0.55) 100%)'
-              : 'radial-gradient(ellipse at center, transparent 0%, transparent 40%, rgba(250,249,246,0.65) 100%)',
+              ? 'radial-gradient(ellipse at center, transparent 0%, transparent 55%, rgba(10,10,10,0.65) 100%)'
+              : 'radial-gradient(ellipse at center, transparent 0%, transparent 55%, rgba(250,249,246,0.6) 100%)',
           transition: 'background 0.3s ease',
         }}
       />

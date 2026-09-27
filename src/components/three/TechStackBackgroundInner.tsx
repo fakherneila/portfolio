@@ -4,6 +4,7 @@ import {
   useEffect,
   useMemo,
   useRef,
+  useState,
   type MutableRefObject,
 } from 'react'
 import * as THREE from 'three'
@@ -53,27 +54,6 @@ function makeRand(seed: number) {
     s = (s * 16807) % 2147483647
     return (s - 1) / 2147483646
   }
-}
-
-// ─── Shared Texture Cache ───────────────────────────────────────────────────
-// TextureLoader / Image-based loading avoids repeated GPU uploads and network calls
-const textureCache = new Map<string, THREE.Texture>()
-
-function getSvgTexture(url: string): THREE.Texture {
-  let tex = textureCache.get(url)
-  if (!tex) {
-    const img = new Image()
-    img.crossOrigin = 'anonymous'
-    img.src = url
-    const newTex = new THREE.Texture(img)
-    newTex.colorSpace = THREE.SRGBColorSpace
-    img.onload = () => {
-      newTex.needsUpdate = true
-    }
-    textureCache.set(url, newTex)
-    return newTex
-  }
-  return tex
 }
 
 // ─── Deterministic logo descriptor ──────────────────────────────────────────
@@ -126,6 +106,7 @@ interface TechLogoCloudProps {
   opacityMultiplier: number
   count: number
   isMobile: boolean
+  textures: THREE.Texture[]
 }
 
 function TechLogoCloud({
@@ -137,6 +118,7 @@ function TechLogoCloud({
   opacityMultiplier,
   count,
   isMobile,
+  textures,
 }: TechLogoCloudProps) {
   const isDark = theme === 'dark'
   const logoColor = isDark ? '#F4C430' : '#B8860B'
@@ -157,6 +139,7 @@ function TechLogoCloud({
   // Ambient shimmer timer
   const lastShimmerTime = useRef(0)
   const nextShimmerInterval = useRef(8)
+  const frameTimeRef = useRef(0)
 
   // Precompute all 25 logo descriptors deterministically once
   const specs: LogoSpec[] = useMemo(() => {
@@ -274,6 +257,12 @@ function TechLogoCloud({
 
   // Central useFrame loop: handles all 7 animation channels across all logos
   useFrame(({ clock }, delta) => {
+    const fpsLimit = tier === 'high' ? 45 : 30
+    const frameInterval = 1 / fpsLimit
+    frameTimeRef.current += delta
+    if (frameTimeRef.current < frameInterval) return
+    frameTimeRef.current = 0
+
     if (reducedMotion) return
 
     const rootGroup = rootGroupRef.current
@@ -408,7 +397,7 @@ function TechLogoCloud({
                 ref={(el) => {
                   mainMaterialRefs.current[i] = el
                 }}
-                map={getSvgTexture(spec.url)}
+                map={textures[i]}
                 color={logoColor}
                 transparent
                 opacity={
@@ -430,7 +419,7 @@ function TechLogoCloud({
                 ref={(el) => {
                   haloMaterialRefs.current[i] = el
                 }}
-                map={getSvgTexture(spec.url)}
+                map={textures[i]}
                 color="#F4C430"
                 transparent
                 opacity={0.15 * opacityMultiplier}
@@ -470,6 +459,46 @@ export default function TechStackBackgroundInner({
   count,
   isMobile,
 }: TechStackBackgroundInnerProps) {
+  const [textures, setTextures] = useState<THREE.Texture[]>([])
+  const [loaded, setLoaded] = useState(false)
+  const [tabVisible, setTabVisible] = useState(
+    typeof document !== 'undefined' ? !document.hidden : true,
+  )
+  useEffect(() => {
+    const handleVisibility = () => setTabVisible(!document.hidden)
+    document.addEventListener('visibilitychange', handleVisibility)
+    return () =>
+      document.removeEventListener('visibilitychange', handleVisibility)
+  }, [])
+
+  useEffect(() => {
+    let active = true
+    setLoaded(false)
+    const loader = new THREE.TextureLoader()
+    const urls = LOGOS.slice(0, LOGO_COUNT[tier]).map(
+      (name) => `/tech/${name}.svg`,
+    )
+
+    Promise.all(urls.map((url) => loader.loadAsync(url)))
+      .then((loadedTextures) => {
+        if (!active) return
+        loadedTextures.forEach((texture) => {
+          texture.colorSpace = THREE.SRGBColorSpace
+        })
+        setTextures(loadedTextures)
+        setLoaded(true)
+      })
+      .catch((error) => {
+        if (active) console.warn('[tech-bg] texture load failed', error)
+      })
+
+    return () => {
+      active = false
+    }
+  }, [tier])
+
+  if (!loaded) return null
+
   // DPR: [1, 1.5] on high, [1, 1.25] on medium, 1 on low
   const dpr =
     tier === 'high'
@@ -487,7 +516,7 @@ export default function TechStackBackgroundInner({
         alpha: true,
         powerPreference: 'high-performance',
       }}
-      frameloop={frameloop}
+      frameloop={!tabVisible ? 'demand' : frameloop}
       onCreated={({ gl }) => gl.setClearColor(0x000000, 0)}
       style={{ width: '100%', height: '100%' }}
     >
@@ -501,6 +530,7 @@ export default function TechStackBackgroundInner({
           opacityMultiplier={opacityMultiplier}
           count={count}
           isMobile={isMobile}
+          textures={textures}
         />
       </Suspense>
     </Canvas>

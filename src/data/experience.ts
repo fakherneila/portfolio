@@ -17,15 +17,15 @@ export const EXPERIENCE: Experience[] = [
       en: [
         'Conducted manual exploratory and regression testing across core platform features.',
         'Wrote and maintained test cases; identified, reproduced, and documented bugs with actionable reports.',
-        'Validated releases before deployment and supported the Microsoft Azure hosting setup.',
+        'Validated releases before deployment and reported issues with clear reproduction steps.',
       ],
       fr: [
         'Tests manuels exploratoires et de régression sur les fonctionnalités clés de la plateforme.',
         'Rédaction et maintenance de cas de test ; identification, reproduction et documentation des bugs avec rapports actionnables.',
-        "Validation des releases avant déploiement et support de l'hébergement Microsoft Azure.",
+        "Validation des releases avant déploiement et remontée des anomalies avec étapes de reproduction claires.",
       ],
     },
-    stack: ['Manual Testing', 'Test Cases', 'Azure', 'Bug Reporting'],
+    stack: ['Manual Testing', 'Test Cases', 'Bug Reporting'],
     achievement: {
       en: 'Improved release confidence before features went live.',
       fr: 'Amélioration de la confiance avant mise en ligne des fonctionnalités.',
@@ -58,10 +58,10 @@ export const EXPERIENCE: Experience[] = [
         'Amélioration de la traçabilité des tests pour le processus QA.',
       ],
     },
-    stack: ['Robot Framework', 'Selenium', 'Python', 'Chrome'],
+    stack: ['Robot Framework', 'SeleniumLibrary', 'Python', 'Chrome', 'Manual Testing'],
     achievement: {
-      en: '96% test pass rate — 45 PASS / 47 total, 0 failures.',
-      fr: 'Taux de réussite de tests de 96 % — 45 PASS / 47 total, 0 échec.',
+      en: 'Automated end-to-end test suites with Robot Framework, ran manual exploratory testing, and reported bugs with clear reproduction steps.',
+      fr: "Automatisation de suites de tests end-to-end avec Robot Framework, tests manuels exploratoires, et remontée d'anomalies avec étapes de reproduction claires.",
     },
   },
   {
