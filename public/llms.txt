@@ -1,0 +1,20 @@
+# Fakher Neila — Portfolio
+
+> Software Engineering student portfolio. Full-Stack and QA Automation focus.
+
+## About
+
+Fakher Neila is a final-year Software Engineering student at ISSAT Sousse,
+Tunisia, actively seeking a PFE internship in 2027. The site showcases
+projects, internships, and technical skills.
+
+## Key pages
+
+- [Home](https://fakherbenneila.netlify.app/en): Main landing page
+- [Projects](https://fakherbenneila.netlify.app/en/projects): Project case studies
+- [Contact](https://fakherbenneila.netlify.app/en#contact): Contact information
+
+## Contact
+
+- Email: neilafakher8@gmail.com
+- LinkedIn: https://www.linkedin.com/in/neïla-fakher-a00901247

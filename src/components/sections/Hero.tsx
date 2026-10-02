@@ -136,6 +136,11 @@ export function Hero() {
           </span>
           <Icon name="ArrowDown" size={16} className="text-gold" />
         </motion.div>
+        <div
+          id="hero-scene-end"
+          aria-hidden
+          className="absolute bottom-0 h-px w-full"
+        />
       </div>
     </section>
   )

@@ -48,11 +48,24 @@ export default function TechStackBackground() {
   const [viewportWidth, setViewportWidth] = useState(() =>
     typeof window !== 'undefined' ? window.innerWidth : 1200,
   )
-  const [mounted, setMounted] = useState(false)
+  const [shouldMount, setShouldMount] = useState(false)
 
   useEffect(() => {
-    const id = window.setTimeout(() => setMounted(true), 800)
-    return () => window.clearTimeout(id)
+    const heroMarker = document.getElementById('hero-scene-end')
+    if (!heroMarker) return
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry?.isIntersecting) {
+          setShouldMount(true)
+          observer.disconnect()
+        }
+      },
+      { rootMargin: '-50% 0px 0px 0px' },
+    )
+
+    observer.observe(heroMarker)
+    return () => observer.disconnect()
   }, [])
 
   // Track viewport resize to dynamically adjust logo count & mobile scale
@@ -107,7 +120,7 @@ export default function TechStackBackground() {
   const hidden = pathname.startsWith('/admin') || pathname.includes('/admin')
   const isProjectDetail = /\/projects\/[^/]+\/?$/.test(pathname)
   const dimmed = isProjectDetail
-  if (hidden || tabHidden || !mounted) return null
+  if (hidden || tabHidden || !shouldMount) return null
   const opacityMultiplier = dimmed ? 0.7 : 1
 
   // Responsive logo count

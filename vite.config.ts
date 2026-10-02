@@ -15,7 +15,9 @@ const mdxRawPlugin = {
   resolveId(id: string, importer?: string) {
     if (id.includes('?raw') && id.split('?')[0].endsWith('.mdx')) {
       const filename = id.split('?')[0]
-      const absolute = filename.startsWith('/') ? path.resolve(__dirname, `.${filename}`) : path.resolve(importer ? path.dirname(importer) : __dirname, filename)
+      const absolute = filename.startsWith('/')
+        ? path.resolve(__dirname, `.${filename}`)
+        : path.resolve(importer ? path.dirname(importer) : __dirname, filename)
       return `${absolute}?raw`
     }
     return null
@@ -36,7 +38,14 @@ export default defineConfig({
         remarkPlugins: [remarkGfm],
         rehypePlugins: [
           rehypeSlug,
-          [rehypePrettyCode, { theme: { dark: 'github-dark-dimmed', light: 'github-light' }, keepBackground: false, defaultLang: 'plaintext' }],
+          [
+            rehypePrettyCode,
+            {
+              theme: { dark: 'github-dark-dimmed', light: 'github-light' },
+              keepBackground: false,
+              defaultLang: 'plaintext',
+            },
+          ],
         ],
         providerImportSource: '@mdx-js/react',
       }),
@@ -48,10 +57,21 @@ export default defineConfig({
       '@': path.resolve(__dirname, './src'),
     },
   },
+  optimizeDeps: {
+    include: ['framer-motion'],
+  },
   build: {
+    modulePreload: {
+      resolveDependencies: (_filename, deps) =>
+        deps.filter((dep) => !dep.includes('HeroSceneInner')),
+    },
     rollupOptions: {
       output: {
         manualChunks: {
+          framer: ['framer-motion'],
+          'three-vendor': ['three', '@react-three/fiber', '@react-three/drei'],
+          i18n: ['i18next', 'react-i18next'],
+          forms: ['react-hook-form', 'zod', '@hookform/resolvers'],
           gsap: ['gsap', 'gsap/ScrollTrigger'],
         },
       },

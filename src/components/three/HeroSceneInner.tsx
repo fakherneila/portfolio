@@ -1,5 +1,11 @@
 import { Canvas } from '@react-three/fiber'
-import { Suspense, useEffect, useState, type MutableRefObject } from 'react'
+import {
+  startTransition,
+  Suspense,
+  useEffect,
+  useState,
+  type MutableRefObject,
+} from 'react'
 import type { PerformanceTier } from '@/hooks/usePerformanceTier'
 import GoldIcosahedron from './GoldIcosahedron'
 import ParticleField from './ParticleField'
@@ -25,13 +31,37 @@ export default function HeroSceneInner({
   const [tabVisible, setTabVisible] = useState(
     typeof document !== 'undefined' ? !document.hidden : true,
   )
+  const [ready, setReady] = useState(false)
+  const [showParticles, setShowParticles] = useState(false)
 
   useEffect(() => {
+    startTransition(() => setReady(true))
+
+    let idleId: number | undefined
+    let timeoutId: number | undefined
+
+    if ('requestIdleCallback' in window) {
+      idleId = window.requestIdleCallback(() => setShowParticles(true))
+    } else {
+      timeoutId = globalThis.setTimeout(() => setShowParticles(true), 500)
+    }
+
     const handleVisibility = () => setTabVisible(!document.hidden)
     document.addEventListener('visibilitychange', handleVisibility)
-    return () =>
+
+    return () => {
+      if (idleId !== undefined && 'cancelIdleCallback' in window) {
+        window.cancelIdleCallback(idleId)
+      }
+      if (timeoutId !== undefined) {
+        window.clearTimeout(timeoutId)
+      }
       document.removeEventListener('visibilitychange', handleVisibility)
+    }
   }, [])
+
+  if (!ready) return null
+
   return (
     <Canvas
       dpr={tier === 'high' ? [1, 1.5] : 1}
@@ -56,17 +86,19 @@ export default function HeroSceneInner({
         color="#B8860B"
       />
       <Suspense fallback={null}>
-        <ParticleField
-          theme={theme}
-          reducedMotion={reducedMotion}
-          count={count}
-        />
         <GoldIcosahedron
           theme={theme}
           reducedMotion={reducedMotion}
           quality={tier}
           mouseRef={mouseRef}
         />
+        {showParticles && (
+          <ParticleField
+            theme={theme}
+            reducedMotion={reducedMotion}
+            count={count}
+          />
+        )}
       </Suspense>
     </Canvas>
   )
