@@ -1,0 +1,82 @@
+---
+title: "L'UX n'est pas une phase. C'est chaque décision que vous prenez."
+excerpt: "La plupart des développeurs pensent que l'UX est quelque chose qu'un designer transmet avant le développement. C'est faux. C'est une décision qui vit dans chaque ligne de code que vous écrivez, que vous l'admettiez ou non."
+date: '2026-10-06'
+tags: ['Ingénierie', 'Produit', 'UX']
+draft: false
+translationOf: 'ux-is-not-a-phase'
+---
+
+J'ai déjà construit un filtre dont je n'étais pas peu fier. Trois jours de travail. Le composant était propre, les tests passaient et la documentation tenait debout assez longtemps pour que je me sente un peu trop satisfait de moi.
+
+Puis j'ai regardé quelqu'un utiliser la page.
+
+La personne a ignoré le filtre, ouvert la recherche du navigateur et tapé le nom du projet. Deux secondes. Mon interaction soigneusement préparée attendait dans un coin de l'écran. Elle ne répondait à aucun besoin que l'utilisateur ressentait. Le navigateur avait déjà une solution, et elle était plus simple que la mienne.
+
+Cette petite claque m'est restée. Elle m'a rappelé que l'UX ne commence pas quand un designer ouvre Figma et ne se termine pas quand le développeur finit ses styles. Elle se joue dans les décisions autour de la fonctionnalité : ce qu'on demande à la personne de remarquer, l'effort qu'on lui impose et ce qui se passe quand elle emprunte un chemin que je n'avais pas prévu.
+
+Avant, je voyais l'UX comme une couche à ajouter après le travail d'ingénierie. Maintenant, je la remarque dans des endroits plus discrets. Une valeur par défaut. Un état de chargement. Le texte d'une erreur. La position d'un bouton pendant une requête. Aucun de ces choix ne paraît spectaculaire dans une pull request. Ensemble, ils forment le produit.
+
+## Les développeurs sont des ingénieurs UX, qu'ils le veuillent ou non
+
+J'entends souvent une phrase de ce genre : « Je construis la fonctionnalité, puis le designer la rend jolie. » C'est pratique à dire parce que cela donne l'impression que chacun travaille dans sa boîte. En réalité, la boîte n'existe pas.
+
+Quand le designer découvre la fonctionnalité, l'ingénieur a déjà décidé par où l'utilisateur commence, comment l'écran réagit, quelles données sont facultatives et ce qui arrive quand le réseau tombe. Ce sont des décisions d'expérience, même si elles sont écrites en TypeScript plutôt que dans un fichier de design.
+
+Prenez le temps de chargement. J'ai travaillé sur un écran qui lançait trois appels dès son ouverture. Pris séparément, ils étaient tous défendables. Ensemble, ils laissaient l'utilisateur devant un squelette assez longtemps pour croire que la page était bloquée. Nous avons séparé les données, mis en cache la partie stable et affiché d'abord la section utile. L'écran a semblé plus rapide sans changement visuel important. Le vrai progrès venait de l'ordre des opérations.
+
+Les messages d'erreur racontent la même histoire. Un formulaire qui renvoie `Erreur : 500 Internal Server Error` a fait un choix. Il a décidé de montrer un détail d'implémentation à quelqu'un qui ne peut rien en faire. « Impossible d'enregistrer cette modification. Réessayez dans un instant. » indique au moins la suite possible. Cette phrase vit dans le code. Attendre une maquette pour la corriger n'est pas une stratégie.
+
+Les valeurs par défaut comptent tout autant. Sur un projet, un nouveau compte arrivait sur un tableau de bord vide. Techniquement, tout fonctionnait. Pour la personne qui venait de s'inscrire, le produit avait surtout l'air inachevé. Nous avons ajouté un exemple et une première action claire. Le tableau de bord est devenu compréhensible avant même la création de données réelles. La décision se trouvait dans le script d'initialisation et dans le composant d'état vide.
+
+On retrouve le même sujet dans le focus clavier, la pagination, l'invalidation du cache ou le choix de conserver un formulaire après un échec. Quand quelqu'un dit « c'est un problème d'UX », j'essaie de poser une question plus utile : quelle décision a produit cette expérience, et où se trouve-t-elle ?
+
+## Le mensonge du « fais-le marcher d'abord, tu l'embelliras après »
+
+J'ai utilisé cette phrase moi aussi. Souvent quand la date de livraison approchait et que j'avais besoin d'une excuse pour repousser les détails gênants. On construit le chemin heureux maintenant. On rangera plus tard.
+
+Plus tard est une dépendance fragile.
+
+La première version qui fonctionne contient déjà beaucoup d'opinions. Elle choisit le texte du bouton. Elle décide si une requête ratée vide le formulaire. Elle décide si la touche Entrée valide. Elle décide si une liste commence par le plus récent ou par le plus ancien. Même un simple spinner apprend quelque chose à la personne qui attend.
+
+Ces choix deviennent difficiles à modifier une fois que les utilisateurs ont pris leurs habitudes. J'ai changé après la mise en ligne le comportement d'une action destructive : au lieu de supprimer immédiatement, elle demandait une confirmation. Le nouveau comportement était plus prudent, mais il surprenait les personnes qui avaient mémorisé l'ancien bouton. Le changement de code était minuscule. Faire évoluer les attentes a pris beaucoup plus de temps.
+
+Le polissage prévu pour plus tard arrive donc rarement. La fonctionnalité part en production, le ticket suivant arrive et les défauts deviennent familiers. Un an après, quelqu'un les appelle du comportement historique. Le coût n'est pas seulement celui du correctif. Ce sont aussi les minutes perdues par les utilisateurs qui doivent composer avec une décision prise dans l'urgence.
+
+Faites fonctionner la fonctionnalité. Mais demandez-vous ce que « fonctionner » veut dire pour la personne en face.
+
+## La décision UX la plus sous-estimée : ce qu'on ne construit pas
+
+La fonctionnalité que je suis le plus content de ne pas avoir livrée était un système de notifications pour un outil interne. Nous avions une liste d'événements, alors ajouter des alertes semblait être la suite logique. Nous avions même esquissé les préférences, les états lus et une petite cloche dans la barre de navigation.
+
+Puis nous avons demandé qui avait besoin de l'alerte et quelle action suivrait sa réception. La réponse restait floue. La plupart des personnes consultaient déjà la page plusieurs fois par jour. La notification aurait ajouté une file à surveiller sans les aider à terminer leur travail.
+
+Nous l'avons retirée du planning. Personne ne l'a regrettée.
+
+Ce genre de décision est difficile à montrer dans un portfolio. Il n'y a pas de capture d'écran d'une fonctionnalité absente. Pourtant, retirer un contrôle inutile améliore souvent un produit. Chaque bouton, badge et fenêtre demande un peu d'attention. L'encombrement finit toujours par se payer.
+
+J'ai aussi renoncé à des filtres sur des listes assez courtes pour être parcourues, au rafraîchissement automatique d'un écran où l'on pouvait modifier un texte et à des réglages qui exposaient des détails techniques sans intérêt pour l'utilisateur. Parfois, la meilleure réponse est une page plus simple et une phrase qui explique le choix.
+
+## Comment pratiquer l'UX en tant qu'ingénieur
+
+Je ne comprenais pas vraiment mon propre produit avant de commencer à l'utiliser chaque matin. Cette habitude a fait remonter les petits défauts qu'une session de test concentrée ne montrait pas : un flash de chargement, un panneau vide sans explication et un bouton qui se déplaçait au moment où je voulais cliquer. Rien de tout cela n'était compliqué à corriger. Je n'étais simplement pas là quand ces problèmes se produisaient.
+
+Regarder une seule personne utiliser le produit m'a appris davantage qu'une nouvelle discussion d'équipe. Pendant une session, un utilisateur ouvrait sans cesse le même menu parce qu'il s'attendait à y trouver l'information. Je l'avais rangée ailleurs, car la structure me paraissait logique. Au bout de dix minutes, le problème était évident. L'interface suivait le modèle des données, pas la question que la personne essayait de résoudre.
+
+J'ai aussi commencé à tester volontairement le pire moment. Que se passe-t-il si la requête prend dix secondes ? Si la base est vide ? Si l'utilisateur colle une valeur copiée d'un tableur avec un espace en trop ? Ces situations ne sont pas rares. Elles apparaissent dès qu'un produit rencontre une vraie personne et un vrai réseau.
+
+Les réponses sont souvent simples. Garder la saisie. Expliquer l'état vide. Permettre une nouvelle tentative sans perdre le travail. Ces choix sont plus faciles à faire quand on a observé l'échec au lieu de l'imaginer depuis un ticket.
+
+Il n'y a pas de rituel secret. Utilisez ce que vous avez construit. Regardez quelqu'un d'autre s'en servir. Passez du temps dans les états inconfortables. Puis corrigez l'endroit où la prochaine action n'est pas claire.
+
+## La meilleure UX est invisible
+
+Les gens complimentent rarement une interface quand elle a fait son travail. Ils disent que la tâche était facile, ou ne parlent pas du produit. Après une semaine passée à discuter d'une interaction minuscule, le résultat peut sembler un peu décevant.
+
+Pourtant, ce résultat silencieux est souvent le bon. Le formulaire a gardé les valeurs après un délai d'attente. Le premier écran proposait un exemple utile. Le message d'erreur indiquait quoi faire. Personne n'a appelé cela du design. Tout le monde a pu continuer.
+
+C'est pour cela que le travail d'ingénierie influence autant l'expérience. Une requête mise en cache retire un moment de doute. Une bonne valeur par défaut évite un ticket au support. Le choix de ne pas ajouter un bouton laisse de la place à l'action importante.
+
+Chaque fois que vous façonnez l'un de ces moments, vous faites de l'UX, que ce soit prévu ou non.
+
+La question n'est pas de savoir si vous êtes une personne UX. C'est de savoir si vous êtes une bonne.

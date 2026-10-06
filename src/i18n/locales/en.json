@@ -7,7 +7,7 @@
     "skills": "Skills",
     "projects": "Projects",
     "education": "Education",
-    "blog": "Blog",
+    "blog": "Blogs",
     "contact": "Contact",
     "menu": "Menu",
     "close": "Close"
@@ -113,18 +113,18 @@
     }
   },
   "blog": {
-    "title": "Blog",
-    "subtitle": "Thoughts and write-ups",
-    "readMore": "Read more",
+    "title": "Blogs",
+    "subtitle": "Notes on software, engineering, and building things that work",
+    "readMore": "Read article",
     "readAll": "All articles",
     "minRead": "min read",
-    "backToList": "Back to blog",
+    "backToList": "Back to all articles",
     "publishedOn": "Published on",
-    "previous": "Previous post",
-    "next": "Next post",
-    "empty": "No posts yet. Check back soon.",
-    "notFound": "Post not found",
-    "notFoundDescription": "This post doesn't exist or was removed.",
+    "previous": "Previous article",
+    "next": "Next article",
+    "empty": "No articles yet. Check back soon.",
+    "notFound": "Article not found",
+    "notFoundDescription": "This article doesn't exist or was removed.",
     "readingTime": "{{minutes}} min read",
     "eyebrow": "Writing",
     "comingSoon": {
@@ -149,7 +149,7 @@
     "phonesLabel": "Phone",
     "availability": {
       "available": "Available for PFE internship",
-      "range": "Feb 2026 – Aug 2027",
+      "range": "Feb 2027 – Aug 2027",
       "unavailable": "Currently unavailable"
     },
     "form": {

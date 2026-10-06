@@ -6,7 +6,8 @@ import ErrorPage from '@/app/pages/ErrorPage'
 import NotFoundPage from '@/app/pages/NotFoundPage'
 import ProjectsPage from '@/app/pages/ProjectsPage'
 import ProjectDetailPage from '@/app/pages/ProjectDetailPage'
-import BlogComingSoonPage from '@/app/pages/BlogComingSoonPage'
+import BlogListPage from '@/app/pages/BlogListPage'
+import BlogPostPage from '@/app/pages/BlogPostPage'
 import AdminLayout from '@/components/admin/AdminLayout'
 import AdminLoginPage from '@/app/pages/AdminLoginPage'
 import AdminAddBlogPage from '@/app/pages/AdminAddBlogPage'
@@ -24,8 +25,8 @@ const router = createBrowserRouter(
           element: <RootLayout />,
           children: [
             { index: true, element: <HomePage /> },
-            { path: 'blog', element: <BlogComingSoonPage /> },
-            { path: 'blog/:slug', element: <BlogComingSoonPage /> },
+            { path: 'blog', element: <BlogListPage /> },
+            { path: 'blog/:slug', element: <BlogPostPage /> },
             { path: 'projects', element: <ProjectsPage /> },
             { path: 'projects/:slug', element: <ProjectDetailPage /> },
             { path: '*', element: <NotFoundPage /> },

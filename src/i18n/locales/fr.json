@@ -7,7 +7,7 @@
     "skills": "Compétences",
     "projects": "Projets",
     "education": "Formation",
-    "blog": "Blog",
+    "blog": "Blogs",
     "contact": "Contact",
     "menu": "Menu",
     "close": "Fermer"
@@ -113,12 +113,12 @@
     }
   },
   "blog": {
-    "title": "Blog",
-    "subtitle": "Réflexions et articles",
-    "readMore": "Lire la suite",
+    "title": "Blogs",
+    "subtitle": "Notes sur le logiciel, l'ingénierie et les choses qui marchent",
+    "readMore": "Lire l'article",
     "readAll": "Tous les articles",
     "minRead": "min de lecture",
-    "backToList": "Retour au blog",
+    "backToList": "Retour aux articles",
     "publishedOn": "Publié le",
     "previous": "Article précédent",
     "next": "Article suivant",
@@ -149,7 +149,7 @@
     "phonesLabel": "Téléphone",
     "availability": {
       "available": "Disponible pour un stage PFE",
-      "range": "Fév. 2026 – Août 2026",
+      "range": "Fév. 2027 – Août 2027",
       "unavailable": "Actuellement indisponible"
     },
     "form": {

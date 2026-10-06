@@ -1,0 +1,81 @@
+---
+title: "UX Is Not a Phase. It's Every Decision You Make."
+excerpt: "Most developers think UX is something a designer hands off before development starts. It isn't. It's a decision that lives inside every line of code you write, whether you acknowledge it or not."
+date: '2026-10-06'
+tags: ['Engineering', 'Product', 'UX']
+draft: false
+---
+
+I built a filter once. Three days of work. The component was clean, the tests were green, and the documentation held up well enough that I felt slightly smug about it.
+
+Then I watched someone use the page.
+
+They ignored the filter, opened the browser search box, and typed the project name. It took two seconds. My carefully planned interaction was sitting in the corner of the page, doing nothing. Their browser already had a solution, and for that particular job it was better than mine.
+
+That was a useful embarrassment. It reminded me that UX does not begin when a designer opens Figma, and it does not end when a developer finishes the CSS. It is present in the decisions around the feature: what it asks people to notice, how much work it makes them do, and what happens when they take a path I did not expect.
+
+I used to think of UX as a layer added after the engineering work. Now I notice it in smaller places. A default value. A loading state. The wording of an error. Whether a button keeps its position while a request is running. None of these decisions looks dramatic in a pull request. Together, they are the product.
+
+## Developers are UX engineers, whether they like it or not
+
+The sentence I hear most often is some version of: "I will build the feature, then the designer can make it look good." It sounds tidy. It also describes a workflow that does not exist.
+
+By the time the designer sees the feature, the engineer has already decided where the user starts, how the interface responds, which data is optional, and what happens when the network disappears. Those are experience decisions. They happen to be written in TypeScript instead of a design file.
+
+Take load time. I worked on a screen that made three requests as soon as it opened. Each request made sense on its own. Together, they left the user staring at a skeleton for long enough to wonder whether the page had broken. Splitting the data, caching the stable part, and showing the useful section first made the screen feel faster without changing its visual design. The biggest improvement was not a new component. It was changing the order in which the work happened.
+
+Error messages are another obvious example once you start looking. A form that returns `Error: 500 Internal Server Error` has made a decision. It has decided that the user should understand an implementation detail, even though the user cannot do anything with it. A message such as "We couldn't save that. Try again in a moment." gives them a next step. The copy lives in code. Waiting for a designer to fix it is not a plan.
+
+Defaults matter in the same way. On one project, a new account opened to an empty dashboard. Technically, nothing was wrong. Practically, the product looked unfinished. We added a small example and a clear first action. People understood what the dashboard was for before they had created any real data. That was a product decision made in the seed script and the empty-state component.
+
+You can find the same pattern in keyboard focus, pagination, cache invalidation, and the decision to preserve a form after a failed submit. When someone says, "That is a UX problem," I try to translate it into a more useful question: what decision produced this experience, and where does that decision live?
+
+## The "make it work first, then make it nice" lie
+
+I have used this phrase myself. Usually when a deadline was close and I wanted permission to ignore the uncomfortable details. Build the happy path now. We can clean it up later.
+
+Later is a bad dependency.
+
+The first working version already contains a surprising number of opinions. It chooses a button label. It decides whether a failed request clears the form. It decides if the user can press Enter to submit. It decides whether a list starts at the newest item or the oldest one. Even a temporary loading spinner teaches the user something about how the system behaves.
+
+Those choices become difficult to change once people have adapted to them. I once changed a destructive action from an immediate delete to a confirmation step after launch. The new behavior was better, but it also surprised people who had built a habit around the old button. We had to explain the change in the release notes and in the interface. The code change was small. The migration of expectations was not.
+
+This is why polishing later rarely works as a process. The feature gets shipped, the next ticket arrives, and the rough edges become familiar. A year later, somebody calls them legacy behavior. The cost is not only the extra implementation time. It is the time users spend recovering from decisions that were made in a hurry.
+
+Make it work. But pay attention to what "work" means for the person using it.
+
+## The most underrated UX decision is what not to build
+
+The feature I am proudest of not shipping was a notification system for a small internal tool. We had a list of events, so adding alerts felt like the natural next step. We sketched preferences, read states, and a little bell icon. It looked convincing in the mockup.
+
+Then we asked who needed the alert and what action they would take after receiving it. The answer was vague. Most people were already checking the page during the day. The notification would have added another queue to monitor without helping them finish their work.
+
+We removed it from the plan. Nobody missed it.
+
+That kind of decision is hard to show in a portfolio. There is no screenshot of an absent feature. Still, removing an unnecessary control can improve a product more than adding a clever one. Every label, button, badge, and modal asks for a little attention. The bill arrives as clutter.
+
+I have also left out filters when the list was short enough to scan, automatic refresh when it could interrupt an edit, and settings that exposed implementation choices users did not care about. Sometimes the right answer is a simpler page and a sentence explaining why.
+
+## How to practice UX as an engineer
+
+I did not understand my own product until I started using it every morning. That routine exposed the little failures that a focused test session had hidden: a loading flash, an empty panel with no explanation, and a button that moved just as I reached for it. None of those issues was hard to fix. I simply had not been present when they happened.
+
+Watching one person use the product taught me more than another round of team discussion. During one session, a user kept opening the same menu because they expected the information to be there. I had put it somewhere else because the structure made sense to me. After ten minutes, the problem was obvious. The interface was organized around the data model, not around the question the user was trying to answer.
+
+I also started testing the worst moment on purpose. What happens when the request takes ten seconds? What happens when the database is empty? What happens when somebody pastes a value copied from a spreadsheet with an extra space at the end? These cases are not exotic. They show up as soon as a product meets a real person and a real network.
+
+The answers are often ordinary. Keep the input. Explain the empty state. Let the user retry without losing their work. Still, those choices are easier to make when you have watched the failure instead of imagining it from a ticket.
+
+There is no special UX ritual here. Use the thing you built. Watch someone else use it. Spend time with the awkward states. Then fix the part that makes the next action unclear.
+
+## The best UX is invisible
+
+People rarely praise the interface when it has done its job. They say the task was easy, or they do not mention the product at all. That can feel anticlimactic after a week spent arguing about a small interaction.
+
+But the quiet result is usually the good one. The form kept its values after a timeout. The first screen showed a useful example. The page opened with the important data instead of a decorative animation. The error told someone what to do next. No one called these decisions design. They just kept moving.
+
+That is why engineering work has such a direct effect on the experience. A cached request can remove a moment of doubt. A useful default can remove a support ticket. A decision not to add one more button can leave room for the action that matters.
+
+You are doing UX whenever you shape one of those moments, whether you planned to or not.
+
+The question is not whether you are a UX person. It is whether you are a good one.

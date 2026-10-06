@@ -24,7 +24,7 @@ export const SITE = {
     { name: 'Anglais', flag: 'EN', level: 'Professionnel' },
     { name: 'Espagnol', flag: 'ES', level: 'Notions' },
   ],
-  availability: { available: true, range: 'Feb 2026 — Aug 2026' },
+  availability: { available: true, range: 'Feb 2027 — Aug 2027' },
 } as const
 
 export const SOCIALS: ReadonlyArray<{
