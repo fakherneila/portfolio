@@ -1,0 +1,49 @@
+---
+title: "The Tests You Write Tell Me What You're Afraid Of"
+excerpt: "Code tells me what you built. Tests tell me what you believe. Here's what I learned about myself reading my own."
+date: "2026-10-20"
+tags: ["Engineering", "Testing", "QA"]
+draft: false
+---
+
+I once worked on a codebase where every dependency was mocked. The database. The network. Even a small utility function from the same file. Every test passed. None of them would have caught a real bug.
+
+That was the first time I realized tests say more about the developer than the code does.
+
+## A test is a fear made visible
+
+When you write `expect(user.name).toBe("Fakher")`, you're not just checking a value. You're saying: *I'm worried this might change.*
+
+When you skip a test for empty input, you're saying: *I'm not worried about that.* Or worse: *I didn't think about it.*
+
+Every test is a judgment. It tells you what someone believes is fragile, what they trust, what they've been burned by, and what they've never seen break.
+
+## What I learned from my own tests
+
+At IJSchool, I wrote 198 unit tests. Reading them again, I can see exactly what I was worried about.
+
+I tested form validation obsessively. Email formats, edge cases, empty fields, extra spaces. I'd been bitten by a form bug before, and I wasn't going to let it happen again.
+
+I barely tested the cache invalidation logic. I trusted it. It worked on my machine. I never watched it fail.
+
+Guess which part broke first in production.
+
+## Read the tests before the code
+
+Now, when I open a project I've never seen, I read the tests first.
+
+Mocks everywhere? The author is afraid of integration.
+
+Only happy paths? The author has never been woken up at 2 AM by an alert.
+
+Tests that lock in the implementation? The author is afraid of refactoring.
+
+Tests that check behavior? The author trusts their own code.
+
+## Write with intention
+
+The best test suites are not the biggest ones. They are the ones where every test has a reason to exist. Not because a coverage tool demanded it. Because someone wrote down: *this is the part I don't want to break.*
+
+Code shows what you built. Tests show what you believe.
+
+The question is not whether you write tests. It is whether you write them on purpose.

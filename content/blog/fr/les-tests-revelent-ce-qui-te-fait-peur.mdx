@@ -1,0 +1,50 @@
+---
+title: "Les tests que vous écrivez révèlent ce qui vous fait peur"
+excerpt: "Le code montre ce que vous avez construit. Les tests montrent ce en quoi vous croyez. Voici ce que j'ai appris en relisant les miens."
+date: "2026-10-20"
+tags: ["Ingénierie", "Tests", "QA"]
+draft: false
+translationOf: "tests-tell-me-what-you-fear"
+---
+
+J'ai déjà travaillé sur un projet où toutes les dépendances étaient mockées. La base de données. Le réseau. Même une petite fonction utilitaire du même fichier. Chaque test passait. Aucun n'aurait attrapé un vrai bug.
+
+C'est la première fois que j'ai compris que les tests parlent plus du développeur que du code.
+
+## Un test est une peur rendue visible
+
+Quand vous écrivez `expect(user.name).toBe("Fakher")`, vous ne vérifiez pas seulement une valeur. Vous dites : *j'ai peur que ça change.*
+
+Quand vous ne testez pas une saisie vide, vous dites : *ça ne m'inquiète pas.* Ou plus honnêtement : *je n'y ai pas pensé.*
+
+Chaque test est un jugement. Il révèle ce que quelqu'un croit fragile, ce en quoi il a confiance, ce qui l'a déjà brûlé, et ce qu'il n'a jamais vu casser.
+
+## Ce que j'ai appris en relisant mes propres tests
+
+Chez IJSchool, j'ai écrit 198 tests unitaires. En les relisant, je vois exactement ce qui m'inquiétait.
+
+J'ai testé la validation de formulaires à l'extrême. Formats d'email, cas limites, champs vides, espaces superflus. Un bug de formulaire m'avait déjà coûté cher, et je ne voulais pas revivre ça.
+
+J'ai à peine testé la logique d'invalidation du cache. Je lui faisais confiance. Ça marchait sur ma machine. Je ne l'avais jamais vue échouer.
+
+Devinez quelle partie a cassé en premier en production.
+
+## Lire les tests avant le code
+
+Maintenant, quand j'ouvre un projet que je ne connais pas, je lis les tests en premier.
+
+Des mocks partout ? L'auteur a peur de l'intégration.
+
+Uniquement des chemins heureux ? L'auteur n'a jamais été réveillé à 2 h du matin par une alerte.
+
+Des tests qui figent l'implémentation ? L'auteur a peur de refactorer.
+
+Des tests qui vérifient le comportement ? L'auteur fait confiance à son propre code.
+
+## Écrire avec intention
+
+Les meilleures suites de tests ne sont pas les plus grosses. Ce sont celles où chaque test a une raison d'exister. Pas parce qu'un outil de couverture l'a exigé. Parce que quelqu'un a écrit noir sur blanc : *ça, je ne veux pas le casser.*
+
+Le code montre ce que vous avez construit. Les tests montrent ce en quoi vous croyez.
+
+La question n'est pas de savoir si vous écrivez des tests. C'est de savoir si vous les écrivez exprès.
