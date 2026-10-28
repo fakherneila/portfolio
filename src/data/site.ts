@@ -5,7 +5,7 @@ export const SITE = {
   url: 'https://fakher-neila.example',
   emails: {
     personal: 'neilafakher8@gmail.com',
-    professional: 'f.neila@clevertech-france.fr',
+    professional: '-------------------',
   },
   phones: [
     { label: 'Mobile', number: '+216 26 511 871', raw: '+21626511871' },
